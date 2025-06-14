@@ -10,12 +10,13 @@ export default function HeroSection() {
 				width: "100%",
 				maxWidth: "1400px",
 				mx: "auto",
-				height: "100%",
+				height: "100vh",
 				display: "grid",
 				gridTemplateColumns: { lg: "auto 600px", md: "1fr" },
+				gridTemplateRows: "1fr",
 				px: { lg: 0, md: 8 },
 				gap: "8rem",
-				py: 10
+				py: 20
 			}}
 		>
 			<Box sx={{ display: "flex", flexDirection: "column", gap: 2, height: "100%" }}>

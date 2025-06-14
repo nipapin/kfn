@@ -2,6 +2,7 @@
 
 import { Box, Stack, Typography, useTheme } from "@mui/material";
 import Image from "next/image";
+import Title from "../Title";
 import Carousel from "./Carousel";
 
 const cards = [
@@ -35,9 +36,7 @@ export default function AboutSection() {
 					py: 10
 				}}
 			>
-				<Typography variant='h2' textAlign={"center"} mb={4} fontSize={"4rem"} fontWeight={"bold"}>
-					О Форуме
-				</Typography>
+				<Title text='О Форуме' />
 				<Stack direction={"column"} gap={16} mt={8}>
 					{cards.map((card, index) => {
 						const even = index % 2 !== 0;

@@ -30,7 +30,7 @@ export default function RootLayout({
 					<ThemeWrapper>
 						<UpNavigation />
 						<Navigation />
-						<Wrapper>{children}</Wrapper>
+						{children}
 						<Footer />
 					</ThemeWrapper>
 				</AppRouterCacheProvider>

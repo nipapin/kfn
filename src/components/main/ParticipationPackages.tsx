@@ -1,6 +1,7 @@
 import { Check, Close } from "@mui/icons-material";
 import { Box, List, ListItemText, ListItem, Paper, Stack, Typography, ListItemIcon, Button, Divider } from "@mui/material";
 import ModalRegistration from "../ModalRegistration";
+import Title from "../Title";
 
 const packages = [
 	{
@@ -63,17 +64,15 @@ export default function ParticipationPackages() {
 	return (
 		<Box
 			id='tarrifs'
-			sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", maxWidth: "1200px", mx: "auto", height: "100%", py: 10 }}
+			sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", maxWidth: "1100px", mx: "auto", height: "100%", py: 10 }}
 		>
-			<Typography variant='h2' textAlign={"center"} mb={3} fontSize={"4rem"} fontWeight={"bold"}>
-				Тарифы участников
-			</Typography>
-			<Stack direction={"row"} spacing={4}>
+			<Title text='Тарифы участников' />
+			<Stack direction={"row"} spacing={2}>
 				{packages.map((pack) => (
 					<Paper
 						variant='outlined'
 						key={pack.id}
-						sx={{ width: "100%", borderRadius: 4, padding: 4, borderWidth: pack.vip ? 4 : 1, borderColor: pack.vip ? "primary.main" : "gray.300" }}
+						sx={{ width: "100%", borderRadius: 4, padding: 3, borderWidth: pack.vip ? 4 : 1, borderColor: pack.vip ? "primary.main" : "gray.300" }}
 					>
 						<Typography variant='h3' fontSize={"1.75rem"} textAlign={"center"} fontWeight={"regular"}>
 							{pack.title}
