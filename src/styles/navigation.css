@@ -1,0 +1,55 @@
+#desktop-navigation {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+#mobile-navigation {
+	width: 100%;
+	justify-content: space-between;
+}
+
+@media (max-width: 767px) {
+	#desktop-navigation {
+		display: none;
+	}
+	#mobile-navigation {
+		display: flex;
+	}
+}
+
+/* Tablet styles */
+@media (min-width: 768px) and (max-width: 1023px) {
+	#desktop-navigation {
+		display: none;
+	}
+	#mobile-navigation {
+		display: flex;
+	}
+}
+
+/* Desktop styles */
+@media (min-width: 1024px) {
+	#desktop-navigation {
+		display: flex;
+	}
+	#mobile-navigation {
+		display: none;
+	}
+	#navigation-toolbar {
+		padding: 0;
+	}
+}
+
+/* Large Desktop styles */
+@media (min-width: 1440px) {
+	#desktop-navigation {
+		display: flex;
+	}
+	#mobile-navigation {
+		display: none;
+	}
+	#navigation-toolbar {
+		padding: 0;
+	}
+}

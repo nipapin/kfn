@@ -4,15 +4,21 @@ import HeroSection from "@/components/main/HeroSection";
 import ParticipationPackages from "@/components/main/ParticipationPackages";
 import Partners from "@/components/main/Partners";
 import YandexMap from "@/components/main/YandexMap";
+import { Divider } from "@mui/material";
 
 export default function Home() {
 	return (
 		<>
 			<HeroSection />
+			<Divider sx={{ my: 4 }} />
 			<AboutSection />
+			<Divider sx={{ my: 4 }} />
 			<ParticipationPackages />
+			<Divider sx={{ my: 4 }} />
 			<AdditionalEntertainments />
+			<Divider sx={{ my: 4 }} />
 			<Partners />
+			<Divider sx={{ my: 4 }} />
 			<YandexMap />
 		</>
 	);

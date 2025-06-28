@@ -1,0 +1,123 @@
+#about-section-container {
+	width: 100%;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	max-width: 1280px;
+}
+
+#about-section-content {
+	width: 100%;
+	max-width: 1400px;
+	margin: 0 auto;
+	height: 100%;
+}
+
+#about-section-card {
+	display: flex;
+	gap: 2rem;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: row;
+}
+#about-section-card-even {
+	display: flex;
+	gap: 2rem;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: row-reverse;
+}
+
+#about-section-card-text {
+	font-size: 1.5rem;
+	font-weight: regular;
+	text-wrap: balance;
+	text-align: start;
+	margin: auto;
+	width: fit-content;
+}
+
+#about-section-card-image {
+	object-fit: cover;
+	width: 100%;
+	height: auto;
+	border-radius: 1rem;
+	overflow: hidden;
+	box-shadow: 20px 20px 0 0 #780522;
+}
+#about-section-card-image-even {
+	object-fit: cover;
+	width: 100%;
+	height: auto;
+	border-radius: 1rem;
+	overflow: hidden;
+	box-shadow: -20px 20px 0 0 #780522;
+}
+
+#about-section-cards {
+	margin-top: 4rem;
+}
+
+#about-section-join-us {
+	margin: 4rem 0;
+	padding: 2rem;
+	border-radius: 1rem;
+	background-color: #f7f4e1;
+	color: #780522;
+	font-size: 1.5rem;
+	font-weight: regular;
+}
+
+@media (max-width: 767px) {
+	#about-section-cards {
+		margin-top: 2rem;
+		gap: 4rem;
+	}
+	#about-section-card-image {
+		box-shadow: none;
+	}
+	#about-section-card-image-even {
+		box-shadow: none;
+	}
+	#about-section-card {
+		flex-direction: column;
+	}
+	#about-section-card-even {
+		flex-direction: column;
+	}
+	#about-section-card-text {
+		font-size: 1rem;
+	}
+}
+
+/* Tablet styles */
+@media (min-width: 768px) and (max-width: 1023px) {
+	#about-section-cards {
+		margin-top: 2rem;
+		gap: 4rem;
+	}
+	#about-section-card-image {
+		box-shadow: none;
+	}
+	#about-section-card-image-even {
+		box-shadow: none;
+	}
+	#about-section-card {
+		flex-direction: column;
+	}
+	#about-section-card-even {
+		flex-direction: column;
+	}
+	#about-section-card-text {
+		font-size: 1rem;
+	}
+}
+
+/* Desktop styles */
+@media (min-width: 1024px) {
+}
+
+/* Large Desktop styles */
+@media (min-width: 1440px) {
+}

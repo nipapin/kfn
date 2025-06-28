@@ -1,21 +1,19 @@
 "use client";
 
-import { Button, Collapse, Dialog, SxProps, useScrollTrigger } from "@mui/material";
+import { ModalRegistrationProps } from "@/app/types/interfaces";
+import { Button, Collapse, Dialog, useMediaQuery, useScrollTrigger, useTheme } from "@mui/material";
 import { useState } from "react";
 import RegistrationForm from "./RegistrationForm";
 
-interface ButtonProps {
-	variant?: "text" | "outlined" | "contained";
-	color?: "primary" | "secondary" | "error" | "info" | "success" | "warning";
-	sx?: SxProps;
-}
-
-function ModalRegistration({ buttonProps, hideOnScroll = true }: { buttonProps?: ButtonProps; hideOnScroll?: boolean }) {
+function ModalRegistration({ buttonProps, hideOnScroll = true }: ModalRegistrationProps) {
 	const [open, setOpen] = useState(false);
 	const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 400 });
+	const { breakpoints } = useTheme();
+	const isMobile = useMediaQuery(breakpoints.down("md"));
 	const collapsed = (
 		<>
 			<Button
+				fullWidth={buttonProps?.fullWidth}
 				variant={buttonProps?.variant || "contained"}
 				color={buttonProps?.color || "primary"}
 				sx={buttonProps?.sx || { width: "100%", mt: 4, borderRadius: 2, maxWidth: "300px", py: 2 }}
@@ -23,7 +21,7 @@ function ModalRegistration({ buttonProps, hideOnScroll = true }: { buttonProps?:
 			>
 				Регистрация
 			</Button>
-			<Dialog open={open} onClose={() => setOpen(false)} slotProps={{ paper: { sx: { backgroundColor: "transparent" } } }}>
+			<Dialog open={open} fullScreen={isMobile} onClose={() => setOpen(false)} slotProps={{ paper: { sx: { backgroundColor: "transparent" } } }}>
 				<RegistrationForm modal={true} close={() => setOpen(false)} />
 			</Dialog>
 		</>

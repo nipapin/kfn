@@ -1,16 +1,14 @@
 "use client";
 
 import { Email, Phone, Telegram } from "@mui/icons-material";
-import { Button, Box, IconButton, Collapse } from "@mui/material";
-import { useScrollTrigger } from "@mui/material";
-import React from "react";
-import { VK } from "./icons/VK";
+import { Box, Button, Collapse, IconButton, useScrollTrigger } from "@mui/material";
+import { VK } from "../icons/VK";
 
 function TopNavigation() {
 	const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 400 });
 
 	return (
-		<Box sx={{ background: "#00000020", width: "100%" }}>
+		<Box id='top-navigation' sx={{ background: "#00000020", width: "100%" }}>
 			<Collapse in={!trigger}>
 				<Box sx={{ width: "100%", maxWidth: "1400px", mx: "auto", display: "flex", justifyContent: "flex-end", alignItems: "center", py: "0.25rem" }}>
 					<Button variant='text' size='small' startIcon={<Email />} sx={{ color: "white" }} href='mailto:grkaliningrada@gmail.com'>

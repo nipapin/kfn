@@ -1,9 +1,9 @@
 "use client";
 
-import { Box, IconButton, Typography } from "@mui/material";
-import { useState } from "react";
-import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { Box, IconButton, useTheme, useMediaQuery } from "@mui/material";
+import Image from "next/image";
+import { useState } from "react";
 
 const images = [
 	"https://kfn39.ru/static/images/spotlight-foto2.png",
@@ -15,6 +15,8 @@ const images = [
 
 export default function Carousel() {
 	const [currentIndex, setCurrentIndex] = useState(0);
+	const { breakpoints } = useTheme();
+	const isMobile = useMediaQuery(breakpoints.down("md"));
 
 	const handlePrev = () => {
 		setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
@@ -25,12 +27,12 @@ export default function Carousel() {
 	};
 
 	return (
-		<Box sx={{ width: "100%", mt: 8 }}>
+		<Box sx={{ width: "100%" }}>
 			<Box
 				sx={{
 					position: "relative",
 					width: "100%",
-					height: "600px",
+					height: isMobile ? "300px" : "600px",
 					overflow: "hidden",
 					borderRadius: "1rem"
 				}}

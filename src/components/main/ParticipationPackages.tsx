@@ -1,7 +1,9 @@
+"use client";
+
 import { Check, Close } from "@mui/icons-material";
-import { Box, List, ListItemText, ListItem, Paper, Stack, Typography, ListItemIcon, Button, Divider } from "@mui/material";
-import ModalRegistration from "../ModalRegistration";
-import Title from "../Title";
+import { Box, List, ListItemText, ListItem, Paper, Stack, Typography, ListItemIcon, Button, Divider, useMediaQuery, useTheme } from "@mui/material";
+import ModalRegistration from "../shared/ModalRegistration";
+import Title from "../shared/Title";
 
 const packages = [
 	{
@@ -61,41 +63,42 @@ const packages = [
 ];
 
 export default function ParticipationPackages() {
+	const { breakpoints } = useTheme();
+	const isMobile = useMediaQuery(breakpoints.down("md"));
 	return (
-		<Box
-			id='tarrifs'
-			sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", maxWidth: "1100px", mx: "auto", height: "100%", py: 10 }}
-		>
-			<Title text='Тарифы участников' />
-			<Stack direction={"row"} spacing={2}>
-				{packages.map((pack) => (
-					<Paper
-						variant='outlined'
-						key={pack.id}
-						sx={{ width: "100%", borderRadius: 4, padding: 3, borderWidth: pack.vip ? 4 : 1, borderColor: pack.vip ? "primary.main" : "gray.300" }}
-					>
-						<Typography variant='h3' fontSize={"1.75rem"} textAlign={"center"} fontWeight={"regular"}>
-							{pack.title}
-						</Typography>
-						<Typography variant='h3' fontSize={"2rem"} textAlign={"center"} fontWeight={"bold"} mt={1}>
-							{pack.price.toLocaleString("ru", { style: "currency", currency: "RUB", maximumFractionDigits: 0 })}
-						</Typography>
-						<Divider sx={{ my: 2 }} />
-						<Typography fontSize={"1rem"} my={1}>
-							Включает:
-						</Typography>
-						<List disablePadding dense>
-							{pack.benefit.map((benefit) => (
-								<ListItem key={benefit.label} disableGutters sx={{ opacity: benefit.available ? 1 : 0.5 }}>
-									<ListItemIcon>{benefit.available ? <Check /> : <Close />}</ListItemIcon>
-									<ListItemText primary={benefit.label} sx={{ textWrap: "balance" }} />
-								</ListItem>
-							))}
-						</List>
-					</Paper>
-				))}
-			</Stack>
-			<ModalRegistration hideOnScroll={false} />
+		<Box id='tarrifs' sx={{ display: "flex", alignItems: "center", width: "100%", maxWidth: "1200px", mx: "auto", py: "6rem", px: "1rem" }}>
+			<Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+				<Title text='Тарифы участников' />
+				<Stack direction={isMobile ? "column" : "row"} spacing={2}>
+					{packages.map((pack) => (
+						<Paper
+							variant='outlined'
+							key={pack.id}
+							sx={{ width: "100%", borderRadius: 4, padding: 3, borderWidth: pack.vip ? 4 : 1, borderColor: pack.vip ? "primary.main" : "gray.300" }}
+						>
+							<Typography variant='h3' fontSize={"1.75rem"} textAlign={"center"} fontWeight={"regular"}>
+								{pack.title}
+							</Typography>
+							<Typography variant='h3' fontSize={"2rem"} textAlign={"center"} fontWeight={"bold"} mt={1}>
+								{pack.price.toLocaleString("ru", { style: "currency", currency: "RUB", maximumFractionDigits: 0 })}
+							</Typography>
+							<Divider sx={{ my: 2 }} />
+							<Typography fontSize={"1rem"} my={1}>
+								Включает:
+							</Typography>
+							<List disablePadding dense>
+								{pack.benefit.map((benefit) => (
+									<ListItem key={benefit.label} disableGutters sx={{ opacity: benefit.available ? 1 : 0.5 }}>
+										<ListItemIcon>{benefit.available ? <Check /> : <Close />}</ListItemIcon>
+										<ListItemText primary={benefit.label} sx={{ textWrap: "balance" }} />
+									</ListItem>
+								))}
+							</List>
+						</Paper>
+					))}
+				</Stack>
+				<ModalRegistration hideOnScroll={false} />
+			</Box>
 		</Box>
 	);
 }

@@ -1,0 +1,48 @@
+#registration-form {
+	width: 100%;
+	border-radius: 1rem;
+	padding: 2rem;
+}
+
+#registration-form-description {
+	font-size: 1rem;
+}
+
+#registration-form-terms {
+	font-size: 1rem;
+}
+
+@media (max-width: 767px) {
+	#registration-form {
+		padding: 1rem;
+		border-radius: 0;
+	}
+	#registration-form-description {
+		font-size: 0.8rem;
+	}
+	#registration-form-terms {
+		font-size: 0.8rem;
+	}
+}
+
+/* Tablet styles */
+@media (min-width: 768px) and (max-width: 1023px) {
+	#registration-form {
+		padding: 1rem;
+		border-radius: 0;
+	}
+	#registration-form-description {
+		font-size: 0.8rem;
+	}
+	#registration-form-terms {
+		font-size: 0.8rem;
+	}
+}
+
+/* Desktop styles */
+@media (min-width: 1024px) {
+}
+
+/* Large Desktop styles */
+@media (min-width: 1440px) {
+}

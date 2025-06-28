@@ -1,9 +1,10 @@
-"use client";
-
-import { Box, Stack, Typography, useTheme } from "@mui/material";
+import { Box, Button, Container, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Image from "next/image";
-import Title from "../Title";
+import Title from "../shared/Title";
 import Carousel from "./Carousel";
+import "@/styles/about.css";
+import { Telegram } from "@mui/icons-material";
+import NextLink from "next/link";
 
 const cards = [
 	{
@@ -24,75 +25,31 @@ const cards = [
 ];
 
 export default function AboutSection() {
-	const { palette } = useTheme();
 	return (
-		<>
-			<Box
-				sx={{
-					width: "100%",
-					maxWidth: "1400px",
-					mx: "auto",
-					height: "100%",
-					py: 10
-				}}
-			>
+		<Container id='about-section-container'>
+			<Box id='about-section-content'>
 				<Title text='О Форуме' />
-				<Stack direction={"column"} gap={16} mt={8}>
+				<NextLink href='https://t.me/+eb5NWF3qGdZkMzcy' target='_blank'>
+					<Button startIcon={<Telegram />} variant='contained' sx={{ width: "100%" }}>
+						Присоединяйтесь к нашему телеграмм каналу
+					</Button>
+				</NextLink>
+				<Stack direction={"column"} gap={16} id='about-section-cards'>
 					{cards.map((card, index) => {
 						const even = index % 2 !== 0;
 						return (
-							<Box
-								display={"flex"}
-								gap={2}
-								key={card.id}
-								alignItems={"center"}
-								justifyContent={"space-between"}
-								flexDirection={even ? "row-reverse" : "row"}
-							>
-								<Typography
-									fontSize={"1.5rem"}
-									fontWeight={"regular"}
-									sx={{ textWrap: "balance" }}
-									textAlign={even ? "end" : "start"}
-									my='auto'
-									width={"fit-content"}
-								>
-									{card.text}
-								</Typography>
-								<Box display={"grid"} gap={2} width={"100%"}>
-									{card.images.map((image, index) => (
-										<Image
-											key={index}
-											src={image}
-											alt={`image-${index}`}
-											width={500}
-											height={500}
-											style={{
-												objectFit: "cover",
-												width: "100%",
-												height: "auto",
-												borderRadius: "1rem",
-												overflow: "hidden",
-												boxShadow: `${even ? -20 : 20}px 20px 0 0 ${palette.primary.main}`
-											}}
-										/>
-									))}
-								</Box>
+							<Box key={index} id={even ? "about-section-card-even" : "about-section-card"}>
+								<Typography id='about-section-card-text'>{card.text}</Typography>
+								{card.images.map((image, index) => (
+									<Image id='about-section-card-image' key={index} src={image} alt={`image-${index}`} width={500} height={500} />
+								))}
 							</Box>
 						);
 					})}
 				</Stack>
 			</Box>
-			<Box padding={10} bgcolor={"#f7f4e1"} color={"primary.main"}>
-				<Typography
-					textAlign={"center"}
-					fontSize={"1.75rem"}
-					maxWidth={"50%"}
-					mx={"auto"}
-					fontWeight={"medium"}
-					lineHeight={1.1}
-					textTransform={"uppercase"}
-				>
+			<Box id='about-section-join-us'>
+				<Typography textAlign={"center"} fontSize={{ lg: "1.5rem", xs: "1rem" }} fontWeight={500}>
 					Присоединяйтесь к форуму в Калининграде и откройте новые горизонты для вашего бизнеса!
 				</Typography>
 			</Box>
@@ -101,12 +58,11 @@ export default function AboutSection() {
 					width: "100%",
 					maxWidth: "1400px",
 					mx: "auto",
-					height: "100%",
-					py: 10
+					height: "100%"
 				}}
 			>
 				<Carousel />
 			</Box>
-		</>
+		</Container>
 	);
 }

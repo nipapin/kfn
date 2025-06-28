@@ -1,12 +1,19 @@
-import { Box, Typography } from "@mui/material";
+"use client";
+
+import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 
 export default function Footer() {
+	const { breakpoints } = useTheme();
+	const isMobile = useMediaQuery(breakpoints.down("md"));
 	return (
 		<Box component='footer' sx={{ backgroundColor: "primary.main", color: "white" }}>
-			<Box sx={{ maxWidth: "1200px", margin: "0 auto", py: 4 }}>
+			<Box sx={{ maxWidth: "1200px", margin: "0 auto", py: isMobile ? 4 : 8, px: isMobile ? "1rem" : "0" }}>
 				<Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
 					<Box>
-						<Typography variant='h6' fontWeight='bold' mb={1}>
+						<Typography variant='h6' fontWeight={700} mb={1} fontSize={"1rem"}>
+							СОЮЗ «ГИЛЬДИЯ РИЭЛТОРОВ КАЛИНИНГРАДА»
+						</Typography>
+						<Typography variant='h6' mb={1} fontSize={"1rem"}>
 							Организаторы
 						</Typography>
 						<Typography variant='body2' sx={{ opacity: 0.8 }}>
@@ -43,8 +50,8 @@ export default function Footer() {
 					</Box>
 				</Box>
 				<Box sx={{ mt: 4, pt: 2, borderTop: "1px solid rgba(255,255,255,0.1)" }}>
-					<Typography variant='body2' sx={{ opacity: 0.6 }}>
-						© 2024 Все права защищены
+					<Typography variant='body2' sx={{ opacity: 0.6 }} textAlign={isMobile ? "center" : "left"}>
+						© 2025 СОЮЗ «ГИЛЬДИЯ РИЭЛТОРОВ КАЛИНИНГРАДА». Все права защищены.
 					</Typography>
 				</Box>
 			</Box>
