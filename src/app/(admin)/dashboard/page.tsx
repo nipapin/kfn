@@ -1,6 +1,6 @@
-import AdminDashboard from "@/components/admin/AdminDashboard";
 import Authorisation from "@/components/admin/Authorisation";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function DashboardPage() {
 	const cookiesList = await cookies();
@@ -8,5 +8,5 @@ export default async function DashboardPage() {
 	if (!token) {
 		return <Authorisation />;
 	}
-	return <AdminDashboard />;
+	redirect("/dashboard/applications");
 }

@@ -1,12 +1,23 @@
 "use client";
 
-import type React from "react";
-import { useEffect, useState } from "react";
 import {
-	AppBar,
-	Toolbar,
-	Typography,
-	Container,
+	Assignment as AssignmentIcon,
+	CheckCircle as CheckCircleIcon,
+	Person as PersonIcon,
+	Schedule as ScheduleIcon,
+	Search as SearchIcon
+} from "@mui/icons-material";
+import {
+	Avatar,
+	Box,
+	Card,
+	CardContent,
+	CardHeader,
+	Chip,
+	Grid,
+	InputAdornment,
+	Menu,
+	MenuItem,
 	Paper,
 	Table,
 	TableBody,
@@ -14,45 +25,24 @@ import {
 	TableContainer,
 	TableHead,
 	TableRow,
-	Chip,
-	Box,
 	TextField,
-	InputAdornment,
-	Grid,
-	Card,
-	CardContent,
-	IconButton,
-	Menu,
-	MenuItem,
-	Avatar,
-	Fab,
-	Dialog,
-	DialogTitle,
-	DialogContent,
-	DialogActions,
-	Button,
-	CardHeader
+	Typography
 } from "@mui/material";
-import {
-	Search as SearchIcon,
-	MoreVert as MoreVertIcon,
-	Add as AddIcon,
-	Person as PersonIcon,
-	Assignment as AssignmentIcon,
-	CheckCircle as CheckCircleIcon,
-	Schedule as ScheduleIcon
-} from "@mui/icons-material";
+import type React from "react";
+import { useEffect, useState } from "react";
 
 // Типы данных
 interface Application {
 	id: number;
 	name: string;
+	company: string;
 	email: string;
 	phone: string;
-	service: string;
-	status: "pending" | "approved" | "rejected" | "in-review";
-	date: string;
-	description: string;
+	city: string;
+	price: string;
+	promocode: string;
+	status: "pending" | "processed" | "rejected" | "in-review";
+	timestamp: number;
 }
 
 // Функция для получения цвета статуса
@@ -60,7 +50,7 @@ const getStatusColor = (status: Application["status"]) => {
 	switch (status) {
 		case "pending":
 			return "warning";
-		case "approved":
+		case "processed":
 			return "success";
 		case "rejected":
 			return "error";
@@ -76,7 +66,7 @@ const getStatusText = (status: Application["status"]) => {
 	switch (status) {
 		case "pending":
 			return "Ожидает";
-		case "approved":
+		case "processed":
 			return "Одобрено";
 		case "rejected":
 			return "Отклонено";
@@ -92,27 +82,44 @@ export default function AdminDashboard() {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [selectedApp, setSelectedApp] = useState<Application | null>(null);
-	const [detailsOpen, setDetailsOpen] = useState(false);
 
 	// Фильтрация заявок по поисковому запросу
 	const filteredApplications = applications.filter(
 		(app) =>
 			app.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
 			app.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			app.service.toLowerCase().includes(searchTerm.toLowerCase())
+			app.price.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			app.city.toLowerCase().includes(searchTerm.toLowerCase())
 	);
 
 	// Статистика
 	const stats = {
 		total: applications.length,
 		pending: applications.filter((app) => app.status === "pending").length,
-		approved: applications.filter((app) => app.status === "approved").length,
+		processed: applications.filter((app) => app.status === "processed").length,
 		rejected: applications.filter((app) => app.status === "rejected").length
 	};
 
-	const handleMenuClick = (event: React.MouseEvent<HTMLElement>, app: Application) => {
+	const handleStatusChange = (app: Application) => (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
 		setSelectedApp(app);
+	};
+
+	const handleUpdateStatus = (status: Application["status"]) => {
+		fetch(`/api/registration`, {
+			method: "PUT",
+			body: JSON.stringify({
+				id: selectedApp?.id,
+				status
+			})
+		}).then(() => {
+			fetch("/api/registration")
+				.then((res) => res.json())
+				.then((data) => {
+					setApplications(data);
+				});
+		});
+		handleMenuClose();
 	};
 
 	const handleMenuClose = () => {
@@ -120,196 +127,124 @@ export default function AdminDashboard() {
 		setSelectedApp(null);
 	};
 
-	const handleViewDetails = () => {
-		setDetailsOpen(true);
-		handleMenuClose();
-	};
-
 	useEffect(() => {
 		fetch("/api/registration")
 			.then((res) => res.json())
 			.then((data) => {
-				console.log(data);
 				setApplications(data);
 			});
 	}, []);
 
 	return (
-		<Box sx={{ flexGrow: 1 }}>
-			{/* Заголовок */}
-			<AppBar position='static' sx={{ mb: 3 }}>
-				<Toolbar sx={{ maxWidth: "xl", margin: "0 auto", width: "100%" }}>
-					<AssignmentIcon sx={{ mr: 2 }} />
-					<Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-						Dashboard - Заявки пользователей
-					</Typography>
-				</Toolbar>
-			</AppBar>
-
-			<Container maxWidth='xl'>
-				{/* Статистика */}
-				<Grid container spacing={3} sx={{ mb: 3 }}>
-					<Grid>
-						<Card>
-							<CardHeader title='Всего заявок' avatar={<AssignmentIcon color='primary' />} />
-							<CardContent>
-								<Typography variant='h4'>{stats.total}</Typography>
-							</CardContent>
-						</Card>
-					</Grid>
-
-					<Grid>
-						<Card>
-							<CardHeader title='Ожидают' avatar={<ScheduleIcon color='warning' />} />
-							<CardContent>
-								<Typography variant='h4'>{stats.pending}</Typography>
-							</CardContent>
-						</Card>
-					</Grid>
-
-					<Grid>
-						<Card>
-							<CardHeader title='Одобрено' avatar={<CheckCircleIcon color='success' />} />
-							<CardContent>
-								<Typography variant='h4'>{stats.approved}</Typography>
-							</CardContent>
-						</Card>
-					</Grid>
-
-					<Grid>
-						<Card>
-							<CardHeader title='Отклонено' avatar={<PersonIcon color='error' />} />
-							<CardContent>
-								<Typography variant='h4'>{stats.rejected}</Typography>
-							</CardContent>
-						</Card>
-					</Grid>
+		<Box sx={{ flexGrow: 1, pb: "6rem" }}>
+			{/* Статистика */}
+			<Grid container spacing={3} sx={{ mb: 3 }}>
+				<Grid>
+					<Card>
+						<CardHeader title='Всего заявок' avatar={<AssignmentIcon color='primary' />} />
+						<CardContent>
+							<Typography variant='h4'>{stats.total}</Typography>
+						</CardContent>
+					</Card>
 				</Grid>
 
-				{/* Поиск */}
-				<Paper sx={{ p: 2, mb: 3 }}>
-					<TextField
-						fullWidth
-						variant='outlined'
-						placeholder='Поиск по имени, email или услуге...'
-						value={searchTerm}
-						onChange={(e) => setSearchTerm(e.target.value)}
-						InputProps={{
-							startAdornment: (
-								<InputAdornment position='start'>
-									<SearchIcon />
-								</InputAdornment>
-							)
-						}}
-					/>
-				</Paper>
+				<Grid>
+					<Card>
+						<CardHeader title='Ожидают' avatar={<ScheduleIcon color='warning' />} />
+						<CardContent>
+							<Typography variant='h4'>{stats.pending}</Typography>
+						</CardContent>
+					</Card>
+				</Grid>
 
-				{/* Таблица заявок */}
-				<Paper>
-					<TableContainer>
-						<Table>
-							<TableHead>
-								<TableRow>
-									<TableCell></TableCell>
-									<TableCell>ФИО</TableCell>
-									<TableCell>Компания</TableCell>
-									<TableCell>Тариф</TableCell>
-									<TableCell>Телефон</TableCell>
-									<TableCell>Почта</TableCell>
-									<TableCell>Город</TableCell>
-									<TableCell>Промокод</TableCell>
-									<TableCell>Статус</TableCell>
-								</TableRow>
-							</TableHead>
-							<TableBody>
-								{filteredApplications.map((app) => (
-									<TableRow key={app.id} hover>
-										<TableCell>
-											<Box sx={{ display: "flex", alignItems: "center" }}>
-												<Avatar sx={{ mr: 2, bgcolor: "primary.main" }}>{app.name.charAt(0)}</Avatar>
-												<Typography variant='body2'>{app.name}</Typography>
-											</Box>
-										</TableCell>
-										<TableCell>
-											<Typography variant='body2'>{app.email}</Typography>
-											<Typography variant='caption' color='textSecondary'>
-												{app.phone}
-											</Typography>
-										</TableCell>
-										<TableCell>{app.service}</TableCell>
-										<TableCell>
-											<Chip label={getStatusText(app.status)} color={getStatusColor(app.status)} size='small' />
-										</TableCell>
-										<TableCell>{new Date(app.date).toLocaleDateString("ru-RU")}</TableCell>
-										<TableCell align='right'>
-											<IconButton onClick={(e) => handleMenuClick(e, app)}>
-												<MoreVertIcon />
-											</IconButton>
-										</TableCell>
-									</TableRow>
-								))}
-							</TableBody>
-						</Table>
-					</TableContainer>
-				</Paper>
+				<Grid>
+					<Card>
+						<CardHeader title='Одобрено' avatar={<CheckCircleIcon color='success' />} />
+						<CardContent>
+							<Typography variant='h4'>{stats.processed}</Typography>
+						</CardContent>
+					</Card>
+				</Grid>
 
-				{/* Меню действий */}
-				<Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
-					<MenuItem onClick={handleViewDetails}>Просмотр деталей</MenuItem>
-					<MenuItem onClick={handleMenuClose}>Редактировать</MenuItem>
-					<MenuItem onClick={handleMenuClose}>Удалить</MenuItem>
-				</Menu>
+				<Grid>
+					<Card>
+						<CardHeader title='Отклонено' avatar={<PersonIcon color='error' />} />
+						<CardContent>
+							<Typography variant='h4'>{stats.rejected}</Typography>
+						</CardContent>
+					</Card>
+				</Grid>
+			</Grid>
 
-				{/* Диалог с деталями */}
-				<Dialog open={detailsOpen} onClose={() => setDetailsOpen(false)} maxWidth='sm' fullWidth>
-					<DialogTitle>Детали заявки #{selectedApp?.id}</DialogTitle>
-					<DialogContent>
-						{selectedApp && (
-							<Box sx={{ pt: 1 }}>
-								<Typography variant='h6' gutterBottom>
-									{selectedApp.name}
-								</Typography>
-								<Typography variant='body2' color='textSecondary' gutterBottom>
-									Email: {selectedApp.email}
-								</Typography>
-								<Typography variant='body2' color='textSecondary' gutterBottom>
-									Телефон: {selectedApp.phone}
-								</Typography>
-								<Typography variant='body2' color='textSecondary' gutterBottom>
-									Услуга: {selectedApp.service}
-								</Typography>
-								<Typography variant='body2' color='textSecondary' gutterBottom>
-									Дата: {new Date(selectedApp.date).toLocaleDateString("ru-RU")}
-								</Typography>
-								<Box sx={{ mt: 2 }}>
-									<Chip label={getStatusText(selectedApp.status)} color={getStatusColor(selectedApp.status)} />
-								</Box>
-								<Typography variant='h6' sx={{ mt: 2, mb: 1 }}>
-									Описание:
-								</Typography>
-								<Typography variant='body2'>{selectedApp.description}</Typography>
-							</Box>
-						)}
-					</DialogContent>
-					<DialogActions>
-						<Button onClick={() => setDetailsOpen(false)}>Закрыть</Button>
-						<Button variant='contained'>Редактировать</Button>
-					</DialogActions>
-				</Dialog>
-
-				{/* Кнопка добавления */}
-				<Fab
-					color='primary'
-					aria-label='add'
-					sx={{
-						position: "fixed",
-						bottom: 16,
-						right: 16
+			{/* Поиск */}
+			<Paper sx={{ p: 2, mb: 3 }}>
+				<TextField
+					fullWidth
+					variant='outlined'
+					placeholder='Поиск по имени, email или услуге...'
+					value={searchTerm}
+					onChange={(e) => setSearchTerm(e.target.value)}
+					InputProps={{
+						startAdornment: (
+							<InputAdornment position='start'>
+								<SearchIcon />
+							</InputAdornment>
+						)
 					}}
-				>
-					<AddIcon />
-				</Fab>
-			</Container>
+				/>
+			</Paper>
+
+			{/* Таблица заявок */}
+			<Paper>
+				<TableContainer>
+					<Table>
+						<TableHead>
+							<TableRow>
+								<TableCell>ФИО</TableCell>
+								<TableCell>Компания</TableCell>
+								<TableCell>Контакты</TableCell>
+								<TableCell>Город</TableCell>
+								<TableCell>Тариф</TableCell>
+								<TableCell>Статус</TableCell>
+								<TableCell>Промокод</TableCell>
+								<TableCell>Дата</TableCell>
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							{filteredApplications.map((app) => (
+								<TableRow key={app.id} hover>
+									<TableCell>
+										<Box sx={{ display: "flex", alignItems: "center" }}>
+											<Avatar sx={{ mr: 2, bgcolor: "primary.main" }}>{app.name.charAt(0)}</Avatar>
+											<Typography variant='body2'>{app.name}</Typography>
+										</Box>
+									</TableCell>
+									<TableCell>{app.company}</TableCell>
+									<TableCell>
+										<Typography variant='body2'>{app.email}</Typography>
+										<Typography variant='caption' color='textSecondary'>
+											{app.phone}
+										</Typography>
+									</TableCell>
+									<TableCell>{app.city}</TableCell>
+									<TableCell>{app.price}</TableCell>
+									<TableCell>
+										<Chip label={getStatusText(app.status)} color={getStatusColor(app.status)} size='small' onClick={handleStatusChange(app)} />
+									</TableCell>
+									<TableCell>{app.promocode}</TableCell>
+									<TableCell>{new Date(Number(app.timestamp)).toLocaleString("ru-RU")}</TableCell>
+								</TableRow>
+							))}
+						</TableBody>
+					</Table>
+				</TableContainer>
+			</Paper>
+
+			{/* Меню действий */}
+			<Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
+				<MenuItem onClick={() => handleUpdateStatus("processed")}>Одобрить</MenuItem>
+				<MenuItem onClick={() => handleUpdateStatus("rejected")}>Отклонить</MenuItem>
+			</Menu>
 		</Box>
 	);
 }
