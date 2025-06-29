@@ -5,7 +5,7 @@ import CompoundMenuItem from "../shared/CompoundMenuItem";
 import ModalRegistration from "../shared/ModalRegistration";
 import TopNavigation from "./TopNavigation";
 
-export default function DesktopNavigation() {
+export default function DesktopNavigation({ isRegistered }: { isRegistered: boolean }) {
 	return (
 		<div id='desktop-navigation'>
 			<TopNavigation />
@@ -59,6 +59,11 @@ export default function DesktopNavigation() {
 					<NextLink href='/contacts' passHref>
 						<Typography>Контакты</Typography>
 					</NextLink>
+					{isRegistered && (
+						<NextLink href='/dashboard' passHref>
+							<Typography>Админ панель</Typography>
+						</NextLink>
+					)}
 					<ModalRegistration buttonProps={{ variant: "contained", color: "secondary", sx: { color: "primary.main" } }} hideOnScroll={true} />
 				</Stack>
 			</Box>

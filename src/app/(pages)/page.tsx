@@ -6,7 +6,7 @@ import Partners from "@/components/main/Partners";
 import YandexMap from "@/components/main/YandexMap";
 import { Divider } from "@mui/material";
 
-export default function Home() {
+export default async function Home() {
 	return (
 		<>
 			<HeroSection />

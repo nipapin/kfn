@@ -11,10 +11,11 @@ const menuItems = [
 	{ title: "Развлекательная программа", href: "/program/entertainment" },
 	{ title: "Гостям", href: "/guests" },
 	{ title: "Стать партнером", href: "/partnership" },
-	{ title: "Контакты", href: "/contacts" }
+	{ title: "Контакты", href: "/contacts" },
+	{ title: "Админ панель", href: "/dashboard" }
 ];
 
-export default function MobileDrawerMenu() {
+export default function MobileDrawerMenu({ isRegistered }: { isRegistered: boolean }) {
 	const [open, setOpen] = useState(false);
 
 	const handleClose = () => {
@@ -28,13 +29,15 @@ export default function MobileDrawerMenu() {
 			</IconButton>
 			<Drawer open={open} onClose={() => setOpen(false)} anchor='right' sx={{ "& .MuiDrawer-paper": { backgroundColor: "primary.main", p: "1rem" } }}>
 				<List>
-					{menuItems.map((item, index) => (
-						<NextLink href={item.href} passHref key={index}>
-							<ListItemButton key={index} sx={{ textDecoration: "none", color: "white" }} onClick={handleClose}>
-								<ListItemText primary={item.title} />
-							</ListItemButton>
-						</NextLink>
-					))}
+					{menuItems
+						.filter((item) => (isRegistered ? true : item.title !== "Админ панель"))
+						.map((item, index) => (
+							<NextLink href={item.href} passHref key={index}>
+								<ListItemButton key={index} sx={{ textDecoration: "none", color: "white" }} onClick={handleClose}>
+									<ListItemText primary={item.title} />
+								</ListItemButton>
+							</NextLink>
+						))}
 				</List>
 				<Paper
 					variant='outlined'

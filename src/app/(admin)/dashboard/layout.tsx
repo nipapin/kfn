@@ -17,11 +17,17 @@ export default async function DashboardLayout({ children }: { children: React.Re
 			<body>
 				<AppRouterCacheProvider options={{ key: "kfn" }}>
 					<ThemeWrapper>
-						{isAdmin && <DashboardAppBar />}
-						<Container maxWidth='xl' sx={{ pb: "6rem", display: "grid", gridTemplateColumns: "300px 1fr", gap: "2rem" }}>
-							<DashboardSidebar />
-							{children}
-						</Container>
+						{isAdmin ? (
+							<>
+								<DashboardAppBar />
+								<Container maxWidth='xl' sx={{ pb: "6rem", display: "grid", gridTemplateColumns: "300px 1fr", gap: "2rem" }}>
+									<DashboardSidebar />
+									{children}
+								</Container>
+							</>
+						) : (
+							<Container sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>{children}</Container>
+						)}
 					</ThemeWrapper>
 				</AppRouterCacheProvider>
 			</body>

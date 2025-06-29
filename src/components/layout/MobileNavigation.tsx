@@ -5,7 +5,7 @@ import NextLink from "next/link";
 import { Suspense } from "react";
 import MobileDrawerMenu from "./MobileDrawerMenu";
 
-export default function MobileNavigation() {
+export default function MobileNavigation({ isRegistered }: { isRegistered: boolean }) {
 	return (
 		<div id='mobile-navigation'>
 			<Box
@@ -27,7 +27,7 @@ export default function MobileNavigation() {
 					</IconButton>
 				}
 			>
-				<MobileDrawerMenu />
+				<MobileDrawerMenu isRegistered={isRegistered} />
 			</Suspense>
 		</div>
 	);

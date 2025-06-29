@@ -1,5 +1,7 @@
 "use client";
-import { Button, CircularProgress, Container, Paper, TextField, Typography } from "@mui/material";
+import { ArrowBack, ArrowBackIos } from "@mui/icons-material";
+import { Box, Button, CircularProgress, Container, IconButton, Paper, TextField, Typography } from "@mui/material";
+import NextLink from "next/link";
 import { useState } from "react";
 
 export default function Authorisation() {
@@ -32,9 +34,16 @@ export default function Authorisation() {
 				variant='outlined'
 				sx={{ p: 2, width: "100%", maxWidth: "400px", margin: "0 auto", display: "flex", flexDirection: "column", gap: 2, borderRadius: "1rem" }}
 			>
-				<Typography variant='h1' fontSize={"1rem"}>
-					Вход в панель управления
-				</Typography>
+				<Box display={"flex"} alignItems={"center"} gap={1}>
+					<NextLink href='/' passHref>
+						<IconButton>
+							<ArrowBack />
+						</IconButton>
+					</NextLink>
+					<Typography variant='h1' fontSize={"1rem"}>
+						Вход в панель управления
+					</Typography>
+				</Box>
 				<TextField label='Логин' type='text' name='login' />
 				<TextField label='Пароль' type='password' name='password' />
 				<Button variant='contained' color='primary' type='submit' disabled={isLoading} endIcon={isLoading ? <CircularProgress size={16} /> : null}>
