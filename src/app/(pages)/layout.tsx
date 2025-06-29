@@ -1,10 +1,10 @@
 import Footer from "@/components/layout/Footer";
 import Navigation from "@/components/layout/Navigation";
 import UpNavigation from "@/components/shared/UpNavigation";
+import "@/styles/global.css";
 import { ThemeWrapper } from "@/theme/ThemeWrapper";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import type { Metadata } from "next";
-import "./global.css";
 
 export const metadata: Metadata = {
 	title: "КФН: Новые Горизонты",

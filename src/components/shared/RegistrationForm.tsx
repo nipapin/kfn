@@ -1,8 +1,12 @@
+"use client";
+
+import "@/styles/registration.css";
 import { Close, Group } from "@mui/icons-material";
 import {
 	Box,
 	Button,
 	Chip,
+	CircularProgress,
 	FormControl,
 	FormHelperText,
 	IconButton,
@@ -15,9 +19,21 @@ import {
 	Typography
 } from "@mui/material";
 import NextLink from "next/link";
-import "@/styles/registration.css";
+import { useState } from "react";
 
 export default function RegistrationForm({ modal, close }: { modal?: boolean; close?: () => void }) {
+	const [isLoading, setIsLoading] = useState(false);
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const formData = new FormData(e.target as HTMLFormElement);
+		const payload = Object.fromEntries(formData);
+		setIsLoading(true);
+		await fetch("/api/registration", {
+			method: "POST",
+			body: JSON.stringify(payload)
+		}).finally(() => setIsLoading(false));
+		close?.();
+	};
 	return (
 		<Paper id='registration-form' sx={{ backgroundColor: "primary.main", width: "100%", height: "100%" }}>
 			{modal && (
@@ -33,9 +49,15 @@ export default function RegistrationForm({ modal, close }: { modal?: boolean; cl
 			<Typography id='registration-form-description' fontWeight={"regular"} fontSize={"1rem"} textAlign={"center"} color='white'>
 				Заполните форму ниже, чтобы зарегистрироваться на мероприятие.
 			</Typography>
-			<Stack direction={"column"} spacing={2} mt={2}>
+			<Stack component={"form"} direction={"column"} spacing={2} mt={2} onSubmit={handleSubmit}>
 				<FormControl fullWidth>
-					<Select fullWidth color='primary' slotProps={{ input: { sx: { backgroundColor: "white", borderRadius: "0.5rem" } } }} defaultValue={0}>
+					<Select
+						fullWidth
+						color='primary'
+						slotProps={{ input: { sx: { backgroundColor: "white", borderRadius: "0.5rem" } } }}
+						defaultValue={0}
+						name='tariff'
+					>
 						<MenuItem value={0}>Выберите тариф</MenuItem>
 						<MenuItem value={1}>
 							Базовый <Chip size='small' label={(2000).toLocaleString("ru", { style: "currency", currency: "RUB" })} sx={{ ml: "auto" }} />
@@ -56,55 +78,64 @@ export default function RegistrationForm({ modal, close }: { modal?: boolean; cl
 					)}
 				</FormControl>
 				<TextField
+					name='fullName'
 					color='primary'
 					fullWidth
-					// label='ФИО'
 					required
 					placeholder='Введите ФИО'
 					slotProps={{ input: { sx: { backgroundColor: "white", borderRadius: "0.5rem" } } }}
 				/>
 				<TextField
+					name='companyName'
 					color='secondary'
 					fullWidth
-					// label='Компания'
 					required
 					placeholder='Наименование компании'
 					slotProps={{ input: { sx: { backgroundColor: "white", borderRadius: "0.5rem" } } }}
 				/>
 				<TextField
+					name='city'
 					color='secondary'
 					fullWidth
-					// label='Город'
 					required
 					placeholder='Город проживания'
 					slotProps={{ input: { sx: { backgroundColor: "white", borderRadius: "0.5rem" } } }}
 				/>
 				<Stack direction={"row"} spacing={1}>
 					<TextField
+						name='email'
 						color='secondary'
 						fullWidth
-						// label='Email'
 						required
 						placeholder='example@mail.com'
 						slotProps={{ input: { sx: { backgroundColor: "white", borderRadius: "0.5rem" } } }}
 					/>
 					<TextField
+						name='phone'
 						color='secondary'
 						fullWidth
-						// label='Телефон'
 						required
 						placeholder='+7 (999) 999-99-99'
 						slotProps={{ input: { sx: { backgroundColor: "white", borderRadius: "0.5rem" } } }}
 					/>
 				</Stack>
 				<TextField
+					name='promoCode'
 					color='secondary'
 					fullWidth
-					// label='Промокод'
 					placeholder='Введите промокод'
 					slotProps={{ input: { sx: { backgroundColor: "white", borderRadius: "0.5rem" } } }}
 				/>
-				<Button variant='contained' color='secondary' startIcon={<Group />} fullWidth sx={{ color: "primary.main" }}>
+				<Button
+					type='submit'
+					variant='contained'
+					color='secondary'
+					startIcon={<Group />}
+					fullWidth
+					sx={{ color: "primary.main" }}
+					endIcon={isLoading ? <CircularProgress size={20} sx={{ color: "white" }} /> : null}
+					disabled={isLoading}
+				>
 					Зарегистрироваться
 				</Button>
 				<Typography

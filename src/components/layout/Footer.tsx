@@ -28,7 +28,7 @@ export default function Footer() {
 							Контакты
 						</Typography>
 						<Typography variant='body2' sx={{ opacity: 0.8 }}>
-							Телефон: +7 (4012) 123-456
+							Телефон: +7 (963) 738-21-39
 						</Typography>
 						<Typography variant='body2' sx={{ opacity: 0.8 }}>
 							Email: grkaliningrada@gmail.com
