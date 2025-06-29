@@ -10,17 +10,17 @@ const cards = [
 	{
 		id: 1,
 		text: "Мы предложим уникальные методики по созданию и монетизации личного бренда, а также обсудим клиентоориентированность, юридические аспекты сделок и инструменты для повышения результативности работы застройщиков и риэлторов",
-		images: ["https://kfn39.ru/static/images/spotlight-foto1.png"]
+		images: ["/images/spotlight-foto1.jpg"]
 	},
 	{
 		id: 2,
 		text: "На форуме вы ознакомитесь с инновациями и успешными кейсами от ведущих специалистов, которые поделятся своим опытом",
-		images: ["https://kfn39.ru/static/images/spotlight-foto5.png"]
+		images: ["/images/spotlight-foto5.jpg"]
 	},
 	{
 		id: 3,
 		text: "Это ваша возможность заглянуть в будущее недвижимости и стать частью крупнейшего события в Северо-Западном и Центральном округе России",
-		images: ["https://kfn39.ru/static/images/spotlight-foto3.png"]
+		images: ["/images/spotlight-foto3.jpg"]
 	}
 ];
 

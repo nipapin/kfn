@@ -6,11 +6,11 @@ import Image from "next/image";
 import { useState } from "react";
 
 const images = [
-	"https://kfn39.ru/static/images/spotlight-foto2.png",
-	"https://kfn39.ru/static/images/spotlight-foto4.png",
-	"https://kfn39.ru/static/images/spotlight-foto6.png",
-	"https://kfn39.ru/static/images/spotlight-foto7.png",
-	"https://kfn39.ru/static/images/spotlight-foto8.png"
+	"/images/spotlight-foto2.jpg",
+	"/images/spotlight-foto4.jpg",
+	"/images/spotlight-foto6.jpg",
+	"/images/spotlight-foto7.jpg",
+	"/images/spotlight-foto8.jpg"
 ];
 
 export default function Carousel() {

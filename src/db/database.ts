@@ -21,7 +21,7 @@ export const entertainments: Entertainment[] = [
 ✅ Личное общение с девелоперами: договоритесь о спецусловиях для своих клиентов.
         `,
 		price: 500,
-		image: "https://kfn39.ru/media/dop_offers/%D0%B1%D1%80%D0%BE%D0%BA%D0%B5%D1%80_%D1%82%D1%83%D1%80.jpg"
+		image: "/images/broker.jpg"
 	},
 	{
 		id: "tainstvennii-zamok",
@@ -31,7 +31,7 @@ export const entertainments: Entertainment[] = [
 Присоединяйтесь к нам и погружайтесь в атмосферу старины и увлекательных историй!
 Автобус до мероприятия будет ждать Вас 6 августа в 18:00 у Radisson Blu Hotel`,
 		price: 14000,
-		image: "https://kfn39.ru/media/dop_offers/%D0%B7%D0%B0%D0%BC%D0%BE%D0%BA.jpg",
+		image: "/images/castle.jpg",
 		special: true
 	},
 	{
@@ -42,7 +42,7 @@ export const entertainments: Entertainment[] = [
 Не упустите шанс стать частью этого незабываемого события, где вы сможете поделиться опытом, обсудить актуальные вопросы и просто насладиться компанией единомышленников.
 Мероприятие начнется 7 августа в 19:00 в уютном ресторане «Усадьба»`,
 		price: 16000,
-		image: "https://kfn39.ru/media/dop_offers/%D1%83%D0%B6%D0%B8%D0%BD.jpg",
+		image: "/images/dinner.jpg",
 		special: true
 	}
 ];
