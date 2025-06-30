@@ -8,6 +8,7 @@ export default function Timeline({ timeline }: TimelineProps) {
 	const lunchIndex = timeline.content.findIndex((program) => program.name === "Обед");
 	const morningProgram = timeline.content.slice(0, lunchIndex);
 	const lunch = timeline.content[lunchIndex];
+	const eveningProgram = timeline.content.slice(lunchIndex + 1).filter(({ name }) => name !== "");
 
 	const parallelProgram = Object.values(
 		timeline.content.reduce<Record<string, TimelineItem[]>>(
@@ -109,9 +110,6 @@ export default function Timeline({ timeline }: TimelineProps) {
 					}
 				/>
 			</Alert>
-			<Typography variant='h2' id='timeline-morning-program-title'>
-				Послеобеденная программа
-			</Typography>
 			<Box id='timeline-program-container'>
 				<Stack direction={"column"} gap={"1rem"} width={"100%"}>
 					<Typography fontSize={{ lg: "1.5rem", xs: "1rem" }} fontWeight={500} sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
@@ -163,9 +161,8 @@ export default function Timeline({ timeline }: TimelineProps) {
 										fontWeight={400}
 										mt={"1rem"}
 										sx={{ textWrap: "balance", whiteSpace: "pre-line" }}
-									>
-										{program.description}
-									</Typography>
+										dangerouslySetInnerHTML={{ __html: program.description }}
+									/>
 								)}
 							</Paper>
 						);
@@ -210,9 +207,12 @@ export default function Timeline({ timeline }: TimelineProps) {
 										<Typography fontSize={"1rem"} fontWeight={500} sx={{ textWrap: "balance", whiteSpace: "pre-line" }}>
 											{program.speaker.name}
 										</Typography>
-										<Typography fontSize={{ lg: "1rem", xs: "0.8rem" }} fontWeight={400} sx={{ textWrap: "balance", whiteSpace: "pre-line" }}>
-											{program.speaker.description}
-										</Typography>
+										<Typography
+											fontSize={{ lg: "1rem", xs: "0.8rem" }}
+											fontWeight={400}
+											sx={{ textWrap: "balance", whiteSpace: "pre-line" }}
+											dangerouslySetInnerHTML={{ __html: program.speaker.description }}
+										/>
 									</Alert>
 								)}
 								{program.description && (
@@ -221,15 +221,69 @@ export default function Timeline({ timeline }: TimelineProps) {
 										fontWeight={400}
 										mt={"1rem"}
 										sx={{ textWrap: "balance", whiteSpace: "pre-line" }}
-									>
-										{program.description}
-									</Typography>
+										dangerouslySetInnerHTML={{ __html: program.description }}
+									/>
 								)}
 							</Paper>
 						);
 					})}
 				</Stack>
 			</Box>
+			<Stack direction={"column"} gap={"1rem"} width={"100%"} mt={"2rem"}>
+				{eveningProgram.map((program) => (
+					<Paper
+						key={program.name}
+						variant='outlined'
+						sx={{ width: "100%", padding: "1rem", borderLeft: "3px solid", borderLeftColor: "primary.main", borderRadius: "0.5rem" }}
+					>
+						<Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.5rem" }}>
+							<Typography fontSize={{ lg: "1.25rem", xs: "1rem" }} fontWeight={500}>
+								{program.name}
+							</Typography>
+							<Chip
+								size={"small"}
+								variant='outlined'
+								color='info'
+								label={
+									<Typography sx={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.75rem" }}>
+										<AccessTime fontSize='small' />
+										{program.time}
+									</Typography>
+								}
+							/>
+						</Box>
+						{program.speaker && (
+							<Alert
+								variant='outlined'
+								icon={false}
+								sx={{ mt: "1rem", borderColor: "primary.main", color: "white", backgroundColor: "primary.main", borderRadius: "0.5rem" }}
+							>
+								<Typography fontSize={"1rem"} fontWeight={500} sx={{ textWrap: "balance", whiteSpace: "pre-line" }}>
+									{program.speaker.name}
+								</Typography>
+								<Typography fontSize={{ lg: "1rem", xs: "0.8rem" }} fontWeight={400} sx={{ textWrap: "balance", whiteSpace: "pre-line" }}>
+									{program.speaker.description}
+								</Typography>
+							</Alert>
+						)}
+						{program.description && (
+							<Typography fontSize={{ lg: "1rem", xs: "0.8rem" }} fontWeight={400} mt={"1rem"} sx={{ textWrap: "balance", whiteSpace: "pre-line" }}>
+								{program.description}
+							</Typography>
+						)}
+						{program.speakers && (
+							<Alert variant='filled' icon={false} sx={{ mt: "1rem", color: "black", backgroundColor: "#f5f5f5" }}>
+								<Typography sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+									<GroupOutlined fontSize='small' /> Участники
+								</Typography>
+								<Typography fontSize={{ lg: "1rem", xs: "0.8rem" }} fontWeight={400} sx={{ textWrap: "balance", whiteSpace: "pre-line" }}>
+									{program.speakers}
+								</Typography>
+							</Alert>
+						)}
+					</Paper>
+				))}
+			</Stack>
 			<Chip
 				label={
 					<Typography

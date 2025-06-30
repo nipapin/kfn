@@ -5,6 +5,7 @@ import Carousel from "./Carousel";
 import "@/styles/about.css";
 import { Telegram } from "@mui/icons-material";
 import NextLink from "next/link";
+import TelegramBanner from "../shared/TelegramBanner";
 
 const cards = [
 	{
@@ -29,11 +30,7 @@ export default function AboutSection() {
 		<Container id='about-section-container'>
 			<Box id='about-section-content'>
 				<Title text='О Форуме' />
-				<NextLink href='https://t.me/+eb5NWF3qGdZkMzcy' target='_blank'>
-					<Button startIcon={<Telegram />} variant='contained' sx={{ width: "100%" }}>
-						Присоединяйтесь к нашему телеграмм каналу
-					</Button>
-				</NextLink>
+				<TelegramBanner />
 				<Stack direction={"column"} gap={16} id='about-section-cards'>
 					{cards.map((card, index) => {
 						const even = index % 2 !== 0;

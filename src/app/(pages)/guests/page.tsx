@@ -1,3 +1,4 @@
+import TelegramBanner from "@/components/shared/TelegramBanner";
 import { AirportShuttle, CalendarMonthOutlined, CameraAltOutlined, HomeOutlined, Phone, PlaceOutlined, Telegram } from "@mui/icons-material";
 import { Box, Button, Card, CardContent, CardHeader, Chip, Container, Grid, Paper, Stack, Typography } from "@mui/material";
 import NextLink from "next/link";
@@ -56,12 +57,8 @@ export default async function GuestsPage() {
 					}}
 				/>
 			</Box>
-			<NextLink href='https://t.me/+eb5NWF3qGdZkMzcy' target='_blank'>
-				<Button startIcon={<Telegram />} variant='contained' sx={{ width: "100%", mb: "2rem" }}>
-					Присоединяйтесь к нам в телеграмм
-				</Button>
-			</NextLink>
-			<Stack direction={"column"} gap={{ lg: "2rem", xs: "1rem" }} width={"100%"}>
+			<TelegramBanner />
+			<Stack direction={"column"} gap={{ lg: "2rem", xs: "1rem" }} width={"100%"} mt={"2rem"}>
 				<Card sx={{ p: { lg: "2rem", xs: "1rem" }, borderRadius: "1rem" }} variant='outlined'>
 					<CardHeader
 						title={

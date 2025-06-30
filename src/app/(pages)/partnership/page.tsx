@@ -386,7 +386,7 @@ export default async function GuestsPage() {
 						Борсиев Константин Валерьевич
 					</Typography>
 					<Typography fontSize={"1rem"} fontWeight={300}>
-						Координатор партнерских отношений
+						Президент Гильдии риэлторов Калининграда
 					</Typography>
 					<Box width={"100%"}>
 						<Paper

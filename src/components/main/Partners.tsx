@@ -5,6 +5,7 @@ import { Box, Button, Card, CardContent, CardHeader, Divider, Grid, Typography, 
 import Image from "next/image";
 import NextLink from "next/link";
 import Title from "../shared/Title";
+import PartnerCard from "../layout/PartnerCard";
 
 export default function Partners() {
 	const { breakpoints } = useTheme();
@@ -20,11 +21,23 @@ export default function Partners() {
 				maxWidth: "1200px",
 				mx: "auto",
 				py: isMobile ? "4rem" : "10rem",
-				px: "1rem"
+				px: "1rem",
+				pb: "4rem"
 			}}
 		>
 			<Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
 				<Title text='Партнёры' />
+				<PartnerCard
+					image={{
+						src: "/images/baltia.png",
+						width: 1099,
+						height: 702,
+						alt: "Балтия ремонт"
+					}}
+					name='Балтия ремонт'
+					description={`группа компаний, которая занимается ремонтом квартир под ключ в Калининградской области.`}
+					type='Официальный партнёр'
+				/>
 				<Box
 					sx={{
 						display: "flex",
@@ -50,27 +63,12 @@ export default function Partners() {
 					}}
 				>
 					<Typography fontSize={"1.2rem"}>
-						<strong>Балтия ремонт</strong> — группа компаний, которая занимается ремонтом квартир под ключ в Калининградской области.
-					</Typography>
-
-					<Image src={"/images/baltia.png"} width={1099} height={702} alt={"Балтия ремонт"} />
-				</Box>
-				<Divider sx={{ my: 6 }} />
-				<Box
-					sx={{
-						display: "flex",
-						gap: 4,
-						flexDirection: isMobile ? "column" : "row",
-						"& img": { width: isMobile ? "100%" : "400px", height: "auto" }
-					}}
-				>
-					<Typography fontSize={"1.2rem"}>
 						<strong>Бэл девелопмент</strong> — профессиональная девелоперская компания полного цикла создана в 2002 году и уже более двух десятилетий
 						строит высококлассные жилые и коммерческие объекты в России и странах СНГ
 					</Typography>
 					<Image src={"/images/bel.png"} width={1099} height={702} alt={"Балтия ремонт"} />
 				</Box>
-				<Divider sx={{ my: 6 }} />
+				{/* <Divider sx={{ my: 6 }} />
 				<Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
 					<Typography variant='h3' textAlign={"center"} fontSize={"2rem"}>
 						Станьте нашим партнером
@@ -100,7 +98,7 @@ export default function Partners() {
 							Станьте нашим партнером
 						</Button>
 					</NextLink>
-				</Box>
+				</Box> */}
 			</Box>
 		</Box>
 	);

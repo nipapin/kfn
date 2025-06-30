@@ -1,10 +1,8 @@
-import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
 	const payload = await request.json();
 	const { login, password } = payload;
-	console.log(login, password);
 	const sucsses = login === process.env.ADMIN_LOGIN && password === process.env.ADMIN_PASSWORD;
 	if (sucsses) {
 		const response = NextResponse.json({ message: "Authorisation successful" });

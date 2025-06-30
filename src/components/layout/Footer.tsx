@@ -11,16 +11,15 @@ export default function Footer() {
 				<Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
 					<Box>
 						<Typography variant='h6' fontWeight={700} mb={1} fontSize={"1rem"}>
-							СОЮЗ «ГИЛЬДИЯ РИЭЛТОРОВ КАЛИНИНГРАДА»
-						</Typography>
-						<Typography variant='h6' mb={1} fontSize={"1rem"}>
-							Организаторы
-						</Typography>
-						<Typography variant='body2' sx={{ opacity: 0.8 }}>
-							Российская гильдия риэлторов
+							Организатор:
+							<br />
+							СОЮЗ "ГИЛЬДИЯ РИЭЛТОРОВ КАЛИНИНГРАДА"
 						</Typography>
 						<Typography variant='body2' sx={{ opacity: 0.8 }}>
-							Гильдия риэлторов Калининградской области
+							При поддержке:
+						</Typography>
+						<Typography variant='body2' sx={{ opacity: 0.8 }}>
+							Российская Гильдия Риэлторов
 						</Typography>
 					</Box>
 					<Box>
