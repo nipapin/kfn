@@ -28,7 +28,7 @@ const translate = (text: string) => {
 
 function AdditionalEntertainments(props: { sx?: SxProps; special?: boolean }) {
 	return (
-		<Box id='additional-entertainments-container' sx={{ ...props.sx, pb: "6rem" }}>
+		<Box id='additional-entertainments-container' sx={{ ...props.sx, pb: "6rem", px: "1rem" }}>
 			<Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
 				<Title text={props.special ? "Развлекательные мероприятия" : "Дополнительные развлечения"} />
 				<Box id='additional-entertainments-grid'>

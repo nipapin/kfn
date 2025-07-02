@@ -18,12 +18,20 @@ export default function PartnerCard({ image, name, description, type }: PartnerC
 	return (
 		<Box sx={{ display: "flex", flexDirection: "column", gap: 4, width: "100%", py: "4rem" }}>
 			<Typography sx={{ fontSize: "1.5rem", fontWeight: 600, textAlign: "center" }}>{type}</Typography>
-			<Box sx={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
-				<Box sx={{ display: "flex", flexDirection: "column", gap: 2, width: "500px" }}>
+			<Box sx={{ display: "flex", flexDirection: { xs: "column-reverse", md: "row" }, justifyContent: "space-between", width: "100%" }}>
+				<Box sx={{ display: "flex", flexDirection: "column", gap: 2, width: { md: "500px", xs: "100%" } }}>
 					<Typography sx={{ fontSize: "2rem", fontWeight: 600 }}>{name}</Typography>
 					<Typography sx={{ fontSize: "1rem", fontWeight: 400 }}>{description}</Typography>
 				</Box>
-				<Box sx={{ width: "500px", height: "auto", display: "flex", justifyContent: "center", "& img": { width: "100%", height: "auto" } }}>
+				<Box
+					sx={{
+						width: { md: "500px", xs: "100%" },
+						height: "auto",
+						display: "flex",
+						justifyContent: "center",
+						"& img": { width: "100%", height: "auto" }
+					}}
+				>
 					<Image src={image.src} alt={image.alt} width={image.width} height={image.height} />
 				</Box>
 			</Box>
