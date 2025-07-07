@@ -1,30 +1,37 @@
-import { Avatar, Box, Button, Card, CardActions, CardContent, CardHeader, Container, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
+import { Phone } from "@mui/icons-material";
+import { Avatar, Box, Card, CardActions, CardHeader, Container, Divider, Grid, IconButton, Paper, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 
 const contacts = [
 	{
 		name: "Борсиев Константин Валерьевич",
-		phone: "+7 (921) 851-95-19"
+		phone: "+7 (921) 851-95-19",
+		avatar: "/images/contacts/borsiev.jpg"
 	},
 	{
 		name: "Шавкуненко Диана Владимировна",
-		phone: "+7 (963) 738-21-39"
+		phone: "+7 (963) 738-21-39",
+		avatar: "/images/contacts/shavkunenko.jpg"
 	},
 	{
 		name: "Капарулина Ирина Александровна",
-		phone: "+7 (911) 070-86-28"
+		phone: "+7 (911) 070-86-28",
+		avatar: "/images/contacts/kaparulina.jpeg"
 	},
 	{
 		name: "Шелевер Светлана Николаевна",
-		phone: "+7 (911) 457-28-53"
+		phone: "+7 (911) 457-28-53",
+		avatar: "/images/contacts/shelever.jpg"
 	},
 	{
 		name: "Ненахова Оксана Александровна",
-		phone: "+7 (921) 103-41-41"
+		phone: "+7 (921) 103-41-41",
+		avatar: "/images/contacts/nenahova.jpg"
 	},
 	{
 		name: "Гилева Татьяна Павловна",
-		phone: "+7 (962) 255-64-90"
+		phone: "+7 (962) 255-64-90",
+		avatar: "/images/contacts/gileva.jpg"
 	}
 ];
 
@@ -55,18 +62,22 @@ export default function ContactsPage() {
 			<Grid container spacing={2} columns={{ lg: 3, xs: 1 }}>
 				{contacts.map((contact) => (
 					<Grid key={contact.name} size={1}>
-						<Card sx={{ borderRadius: "1rem", p: "1rem", height: "100%" }} variant='outlined'>
+						<Card sx={{ borderRadius: "1rem", p: "0.5rem", height: "100%" }} variant='outlined'>
 							<CardHeader
 								title={contact.name}
 								subheader={contact.phone}
-								avatar={<Avatar sx={{ backgroundColor: "primary.main" }}>{extractTag(contact.name)}</Avatar>}
+								avatar={
+									<Avatar src={contact.avatar} sx={{ backgroundColor: "primary.main", width: "48px", height: "48px" }}>
+										{extractTag(contact.name)}
+									</Avatar>
+								}
 							/>
-							<CardContent />
+							{/* <CardContent /> */}
 							<Divider />
 							<CardActions sx={{ justifyContent: "flex-end" }}>
-								<Button variant='contained' color='primary' href={`tel:${contact.phone}`}>
-									Позвонить
-								</Button>
+								<IconButton href={`tel:${contact.phone}`} sx={{ color: "primary.main" }}>
+									<Phone />
+								</IconButton>
 							</CardActions>
 						</Card>
 					</Grid>
