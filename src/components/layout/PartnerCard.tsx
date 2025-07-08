@@ -16,7 +16,7 @@ interface PartnerCardProps {
 
 export default function PartnerCard({ image, name, description, type }: PartnerCardProps) {
 	return (
-		<Box sx={{ display: "flex", flexDirection: "column", gap: 4, width: "100%", py: "4rem" }}>
+		<Box sx={{ display: "flex", flexDirection: "column", gap: 4, width: "100%" }}>
 			<Typography sx={{ fontSize: "1.5rem", fontWeight: 600, textAlign: "center" }}>{type}</Typography>
 			<Box sx={{ display: "flex", flexDirection: { xs: "column-reverse", md: "row" }, justifyContent: "space-between", width: "100%" }}>
 				<Box sx={{ display: "flex", flexDirection: "column", gap: 2, width: { md: "500px", xs: "100%" } }}>
@@ -35,7 +35,7 @@ export default function PartnerCard({ image, name, description, type }: PartnerC
 					<Image src={image.src} alt={image.alt} width={image.width} height={image.height} />
 				</Box>
 			</Box>
-			<Divider sx={{ my: "4rem" }} />
+			<Divider sx={{ my: "2rem" }} />
 		</Box>
 	);
 }
