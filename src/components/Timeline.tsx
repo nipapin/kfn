@@ -10,13 +10,6 @@ export default function Timeline({ timeline }: TimelineProps) {
 	const lunch = timeline.content[lunchIndex];
 	const eveningProgram = timeline.content.slice(lunchIndex + 1).filter(({ name }) => name !== "");
 
-	const parallelProgram = Object.values(
-		timeline.content.reduce<Record<string, TimelineItem[]>>(
-			(acc, program) => ({ ...acc, [program.time]: [...(acc[program.time] || []), program] }),
-			{}
-		)
-	).filter((item) => item.length > 1);
-
 	return (
 		<>
 			<Box id='timeline-container'>
@@ -111,13 +104,12 @@ export default function Timeline({ timeline }: TimelineProps) {
 				/>
 			</Alert>
 			<Box id='timeline-program-container'>
-				<Stack direction={"column"} gap={"1rem"} width={"100%"}>
-					<Typography fontSize={{ lg: "1.5rem", xs: "1rem" }} fontWeight={500} sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-						<Place color='primary' /> Зал 1
-					</Typography>
-					{parallelProgram.map((parallel, index) => {
-						const program = parallel[0];
-						return (
+				{timeline.halls.map((hall) => (
+					<Stack direction={"column"} gap={"1rem"} width={"100%"}>
+						<Typography fontSize={{ lg: "1.5rem", xs: "1rem" }} fontWeight={500} sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+							<Place color='primary' /> {hall.name}
+						</Typography>
+						{hall.content.map((program, index) => (
 							<Paper
 								key={index}
 								variant='outlined'
@@ -138,9 +130,6 @@ export default function Timeline({ timeline }: TimelineProps) {
 										}
 									/>
 								</Box>
-								<Typography fontSize={{ lg: "1.25rem", md: "1rem", sm: "0.75rem", xs: "0.5rem" }} fontWeight={500}>
-									{program.name}
-								</Typography>
 								{program.speaker && (
 									<Alert
 										variant='outlined'
@@ -165,69 +154,9 @@ export default function Timeline({ timeline }: TimelineProps) {
 									/>
 								)}
 							</Paper>
-						);
-					})}
-				</Stack>
-				<Stack direction={"column"} gap={"1rem"} width={"100%"}>
-					<Typography fontSize={{ lg: "1.5rem", xs: "1rem" }} fontWeight={500} sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-						<Place color='primary' /> Зал 2
-					</Typography>
-					{parallelProgram.map((parallel, index) => {
-						const program = parallel[1];
-						return (
-							<Paper
-								key={index}
-								variant='outlined'
-								sx={{ width: "100%", padding: "1rem", borderLeft: "3px solid", borderLeftColor: "primary.main", borderRadius: "0.5rem" }}
-							>
-								<Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-									<Typography fontSize={"1.25rem"} fontWeight={500}>
-										{program.name}
-									</Typography>
-									<Chip
-										variant='outlined'
-										color='info'
-										label={
-											<Typography sx={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.75rem" }}>
-												<AccessTime fontSize='small' />
-												{program.time}
-											</Typography>
-										}
-									/>
-								</Box>
-								<Typography fontSize={"1.25rem"} fontWeight={500}>
-									{program.name}
-								</Typography>
-								{program.speaker && (
-									<Alert
-										variant='outlined'
-										icon={false}
-										sx={{ mt: "1rem", borderColor: "primary.main", color: "primary.main", backgroundColor: "secondary.main", borderRadius: "0.5rem" }}
-									>
-										<Typography fontSize={"1rem"} fontWeight={500} sx={{ textWrap: "balance", whiteSpace: "pre-line" }}>
-											{program.speaker.name}
-										</Typography>
-										<Typography
-											fontSize={{ lg: "1rem", xs: "0.8rem" }}
-											fontWeight={400}
-											sx={{ textWrap: "balance", whiteSpace: "pre-line" }}
-											dangerouslySetInnerHTML={{ __html: program.speaker.description }}
-										/>
-									</Alert>
-								)}
-								{program.description && (
-									<Typography
-										fontSize={{ lg: "1rem", xs: "0.8rem" }}
-										fontWeight={400}
-										mt={"1rem"}
-										sx={{ textWrap: "balance", whiteSpace: "pre-line" }}
-										dangerouslySetInnerHTML={{ __html: program.description }}
-									/>
-								)}
-							</Paper>
-						);
-					})}
-				</Stack>
+						))}
+					</Stack>
+				))}
 			</Box>
 			<Stack direction={"column"} gap={"1rem"} width={"100%"} mt={"2rem"}>
 				{eveningProgram.map((program) => (

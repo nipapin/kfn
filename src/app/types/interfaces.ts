@@ -45,11 +45,18 @@ export interface TimelineItem {
 	speaker?: { name: string; description: string };
 	speakers?: string;
 }
+
+export interface Hall {
+	name: string;
+	content: TimelineItem[];
+}
+
 export interface Timeline {
 	id: string;
 	title: string;
 	description: string;
 	date: string;
+	halls: Hall[];
 	content: TimelineItem[];
 }
 

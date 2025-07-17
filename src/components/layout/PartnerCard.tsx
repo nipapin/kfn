@@ -13,9 +13,15 @@ interface PartnerCardProps {
 	description: string;
 	type: string;
 	divider: boolean;
+	video?: {
+		src: string;
+		width: number;
+		height: number;
+		poster: string;
+	};
 }
 
-export default function PartnerCard({ image, name, description, type, divider }: PartnerCardProps) {
+export default function PartnerCard({ image, name, description, type, divider, video }: PartnerCardProps) {
 	return (
 		<Box sx={{ display: "flex", flexDirection: "column", gap: 4, width: "100%" }}>
 			<Typography sx={{ fontSize: "1.5rem", fontWeight: 600, textAlign: "center" }}>{type}</Typography>
@@ -25,13 +31,15 @@ export default function PartnerCard({ image, name, description, type, divider }:
 					flexDirection: { xs: "column-reverse", md: "row" },
 					justifyContent: "space-between",
 					width: "100%",
-					alignItems: "center",
+					alignItems: "flex-start",
 					gap: { md: "0", xs: "1rem" }
 				}}
 			>
 				<Box sx={{ display: "flex", flexDirection: "column", gap: { md: "1rem", xs: "0.5rem" }, width: { md: "500px", xs: "100%" } }}>
 					<Typography sx={{ fontSize: { md: "2rem", xs: "1.5rem" }, fontWeight: 600, display: { xs: "none", md: "block" } }}>{name}</Typography>
-					<Typography sx={{ fontSize: { md: "1rem", xs: "0.875rem" }, fontWeight: 400, textWrap: "balance" }}>{description}</Typography>
+					<Typography sx={{ fontSize: { md: "1rem", xs: "0.875rem" }, fontWeight: 400, textWrap: "balance", whiteSpace: "pre-line" }}>
+						{description}
+					</Typography>
 				</Box>
 				<Box
 					sx={{
@@ -46,6 +54,15 @@ export default function PartnerCard({ image, name, description, type, divider }:
 					<Image src={image.src} alt={image.alt} width={image.width} height={image.height} />
 				</Box>
 			</Box>
+			{video && (
+				<Box
+					sx={{
+						"& video": { width: "100%", height: "auto" }
+					}}
+				>
+					<video src={video.src} width={video.width} height={video.height} controls poster={video.poster} autoPlay muted loop playsInline />
+				</Box>
+			)}
 			{divider && <Divider sx={{ my: "2rem" }} />}
 		</Box>
 	);

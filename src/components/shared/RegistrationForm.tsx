@@ -22,8 +22,8 @@ import {
 	Typography
 } from "@mui/material";
 import NextLink from "next/link";
-import { useState, useRef, forwardRef } from "react";
-import { IMask, IMaskInput, IMaskMixin } from "react-imask";
+import { useRef, useState } from "react";
+import { IMask, IMaskMixin } from "react-imask";
 
 const tariffs = [
 	{
@@ -73,7 +73,7 @@ export default function RegistrationForm({ modal, close }: { modal?: boolean; cl
 		const payload = Object.fromEntries(formData);
 		await fetch("/api/registration", {
 			method: "POST",
-			body: JSON.stringify(payload)
+			body: JSON.stringify({ ...payload, tariff: tariffs[Number(payload.tariff)].name })
 		}).finally(() => {
 			setIsLoading(false);
 			setSuccess(true);
