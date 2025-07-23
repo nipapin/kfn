@@ -36,7 +36,9 @@ export default function PartnerCard({ image, name, description, type, divider, v
 				}}
 			>
 				<Box sx={{ display: "flex", flexDirection: "column", gap: { md: "1rem", xs: "0.5rem" }, width: { md: "500px", xs: "100%" } }}>
-					<Typography sx={{ fontSize: { md: "2rem", xs: "1.5rem" }, fontWeight: 600, display: { xs: "none", md: "block" } }}>{name}</Typography>
+					<Typography sx={{ fontSize: { md: "2rem", xs: "1.5rem" }, fontWeight: 600, display: { xs: "none", md: "block" }, whiteSpace: "pre-line" }}>
+						{name}
+					</Typography>
 					<Typography sx={{ fontSize: { md: "1rem", xs: "0.875rem" }, fontWeight: 400, textWrap: "balance", whiteSpace: "pre-line" }}>
 						{description}
 					</Typography>

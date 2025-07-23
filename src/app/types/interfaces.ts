@@ -64,3 +64,19 @@ export interface ModalRegistrationProps {
 	buttonProps?: ButtonProps;
 	hideOnScroll?: boolean;
 }
+
+export interface TourItem {
+	id: string;
+	name: string;
+	type: string;
+	description: string;
+	content: TourContentItem[];
+	price: number;
+}
+
+export interface TourContentItem {
+	id: number;
+	time: string;
+	title: string;
+	description: string;
+}

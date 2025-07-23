@@ -1,4 +1,4 @@
-import { TimelineItem, TimelineProps } from "@/app/types/interfaces";
+import { TimelineProps } from "@/app/types/interfaces";
 import { AccessTime, CalendarMonth, GroupOutlined, Place } from "@mui/icons-material";
 import { Alert, Box, Chip, Paper, Skeleton, Stack, Typography } from "@mui/material";
 
