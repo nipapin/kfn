@@ -27,7 +27,7 @@ import { IMask, IMaskMixin } from "react-imask";
 
 const tariffs = [
 	{
-		name: "Брокер Тур «ЖК Прибалтики»",
+		name: "Брокер Тур",
 		price: 500
 	},
 	{

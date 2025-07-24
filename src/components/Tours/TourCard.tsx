@@ -1,7 +1,7 @@
 import { TourItem } from "@/app/types/interfaces";
 import { translate } from "@/utilities/translator";
 import { ArrowForward } from "@mui/icons-material";
-import { Button, Card, CardActions, CardContent, CardHeader, Typography } from "@mui/material";
+import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@mui/material";
 import NextLink from "next/link";
 
 export default function TourCard({ tour }: { tour: TourItem }) {
@@ -16,6 +16,7 @@ export default function TourCard({ tour }: { tour: TourItem }) {
 				}
 				slotProps={{ title: { sx: { fontSize: "1.2rem" } } }}
 			/>
+			<CardMedia component='img' image={tour.image} alt={tour.name} sx={{ height: "200px", objectFit: "cover" }} />
 			<CardContent>
 				<Typography>{tour.description}</Typography>
 			</CardContent>

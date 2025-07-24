@@ -1,11 +1,8 @@
 "use client";
 
 import { tours } from "@/db/database";
-import { translate } from "@/utilities/translator";
-import { Box, Button, Card, CardActions, CardContent, CardHeader, Chip, Grid, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
-import NextLink from "next/link";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Title from "../shared/Title";
-import { ArrowForward } from "@mui/icons-material";
 import TourCard from "../Tours/TourCard";
 
 export default function ToursSection() {

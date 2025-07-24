@@ -72,6 +72,7 @@ export interface TourItem {
 	description: string;
 	content: TourContentItem[];
 	price: number;
+	image: string;
 }
 
 export interface TourContentItem {
