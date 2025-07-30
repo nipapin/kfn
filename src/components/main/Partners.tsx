@@ -33,7 +33,7 @@ export default function Partners() {
 							image={partner.image}
 							name={partner.name}
 							description={partner.description}
-							type=''
+							type={partner.type || ""}
 							divider={!isLast}
 							video={partner.video}
 						/>

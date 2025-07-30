@@ -2,9 +2,9 @@ import { ProgrammPageProps } from "@/app/types/interfaces";
 import AdditionalEntertainments from "@/components/main/AdditionalEntertainments";
 import Timeline from "@/components/Timeline";
 import { program } from "@/db/database";
+import "@/styles/program.css";
 import { Container, Divider } from "@mui/material";
 import { Fragment } from "react";
-import "@/styles/program.css";
 
 export default async function ProgrammPage({ params }: ProgrammPageProps) {
 	const { programid } = await params;
@@ -14,7 +14,6 @@ export default async function ProgrammPage({ params }: ProgrammPageProps) {
 	return (
 		<Container id='program-page-container'>
 			{programid === "business" &&
-				timelines.length > 0 &&
 				timelines.map((timeline, index, self) => (
 					<Fragment key={index}>
 						<Timeline timeline={timeline} />

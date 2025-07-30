@@ -23,6 +23,7 @@ export default function TourContent({ content }: { content: TourContentItem[] })
 							variant='outlined'
 							color='primary'
 							size='small'
+							sx={{ display: item.time ? "flex" : "none" }}
 						/>
 					</Box>
 					<Typography fontSize={"1rem"} fontWeight={"400"} width={"80%"}>

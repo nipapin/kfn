@@ -1,8 +1,11 @@
 import { TimelineProps } from "@/app/types/interfaces";
-import { AccessTime, CalendarMonth, GroupOutlined, Place } from "@mui/icons-material";
-import { Alert, Box, Chip, Paper, Skeleton, Stack, Typography } from "@mui/material";
+import { CalendarMonth } from "@mui/icons-material";
+import { Alert, Box, Chip, Skeleton, Stack, Typography } from "@mui/material";
 
 import "@/styles/business.css";
+import EventCard from "./EventCard";
+import TimeChip from "./TimeChip";
+import TimelineEvent from "./TimelineEvent";
 
 export default function Timeline({ timeline }: TimelineProps) {
 	const lunchIndex = timeline.content.findIndex((program) => program.name === "Обед");
@@ -11,8 +14,6 @@ export default function Timeline({ timeline }: TimelineProps) {
 	const eveningHallProgram = timeline.halls.map((hall) => ({ ...hall, content: hall.content.filter((program) => program.time > "13:00") }));
 	const lunch = timeline.content[lunchIndex];
 	const eveningProgram = timeline.content.slice(lunchIndex + 1).filter(({ name }) => name !== "");
-
-	console.log(morningHallProgram);
 
 	return (
 		<>
@@ -39,244 +40,27 @@ export default function Timeline({ timeline }: TimelineProps) {
 			</Typography>
 			<Stack direction={"column"} gap={"1rem"} width={"100%"} mt={"2rem"}>
 				{morningProgram.map((program) => (
-					<Paper
-						key={program.name}
-						variant='outlined'
-						sx={{ width: "100%", padding: "1rem", borderLeft: "3px solid", borderLeftColor: "primary.main", borderRadius: "0.5rem" }}
-					>
-						<Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.5rem" }}>
-							<Typography fontSize={{ lg: "1.25rem", xs: "1rem" }} fontWeight={500}>
-								{program.name}
-							</Typography>
-							<Chip
-								size={"small"}
-								variant='outlined'
-								color='info'
-								label={
-									<Typography sx={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.75rem" }}>
-										<AccessTime fontSize='small' />
-										{program.time}
-									</Typography>
-								}
-							/>
-						</Box>
-						{program.speaker && (
-							<Alert
-								variant='outlined'
-								icon={false}
-								sx={{ mt: "1rem", borderColor: "primary.main", color: "white", backgroundColor: "primary.main", borderRadius: "0.5rem" }}
-							>
-								<Typography fontSize={"1rem"} fontWeight={500} sx={{ textWrap: "balance", whiteSpace: "pre-line" }}>
-									{program.speaker.name}
-								</Typography>
-								<Typography fontSize={{ lg: "1rem", xs: "0.8rem" }} fontWeight={400} sx={{ textWrap: "balance", whiteSpace: "pre-line" }}>
-									{program.speaker.description}
-								</Typography>
-							</Alert>
-						)}
-						{program.description && (
-							<Typography fontSize={{ lg: "1rem", xs: "0.8rem" }} fontWeight={400} mt={"1rem"} sx={{ textWrap: "balance", whiteSpace: "pre-line" }}>
-								{program.description}
-							</Typography>
-						)}
-						{program.speakers && (
-							<Alert variant='filled' icon={false} sx={{ mt: "1rem", color: "black", backgroundColor: "#f5f5f5" }}>
-								<Typography sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-									<GroupOutlined fontSize='small' /> Участники
-								</Typography>
-								<Typography fontSize={{ lg: "1rem", xs: "0.8rem" }} fontWeight={400} sx={{ textWrap: "balance", whiteSpace: "pre-line" }}>
-									{program.speakers}
-								</Typography>
-							</Alert>
-						)}
-					</Paper>
+					<EventCard key={program.name} program={program} />
 				))}
 			</Stack>
 			<Box id='timeline-program-container'>
 				{morningHallProgram.every((hall) => hall.content.length > 0) &&
-					morningHallProgram.map((hall) => (
-						<Stack key={hall.name} direction={"column"} gap={"1rem"} width={"100%"}>
-							<Typography fontSize={{ lg: "1.5rem", xs: "1rem" }} fontWeight={500} sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-								<Place color='primary' /> {hall.name}
-							</Typography>
-							{hall.content.map((program, index) => (
-								<Paper
-									key={index}
-									variant='outlined'
-									sx={{ width: "100%", padding: "1rem", borderLeft: "3px solid", borderLeftColor: "primary.main", borderRadius: "0.5rem" }}
-								>
-									<Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-										<Typography fontSize={{ lg: "1.25rem", md: "1rem", sm: "0.75rem", xs: "0.5rem" }} fontWeight={500}>
-											{program.name}
-										</Typography>
-										<Chip
-											variant='outlined'
-											color='info'
-											label={
-												<Typography sx={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.75rem" }}>
-													<AccessTime fontSize='small' />
-													{program.time}
-												</Typography>
-											}
-										/>
-									</Box>
-									{program.speaker && (
-										<Alert
-											variant='outlined'
-											icon={false}
-											sx={{
-												mt: "1rem",
-												borderColor: "primary.main",
-												color: "primary.main",
-												backgroundColor: "secondary.main",
-												borderRadius: "0.5rem"
-											}}
-										>
-											<Typography fontSize={"1rem"} fontWeight={500} sx={{ textWrap: "balance", whiteSpace: "pre-line" }}>
-												{program.speaker.name}
-											</Typography>
-											<Typography fontSize={{ lg: "1rem", xs: "0.8rem" }} fontWeight={400} sx={{ textWrap: "balance", whiteSpace: "pre-line" }}>
-												{program.speaker.description}
-											</Typography>
-										</Alert>
-									)}
-									{program.description && (
-										<Typography
-											fontSize={{ lg: "1rem", xs: "0.8rem" }}
-											fontWeight={400}
-											mt={"1rem"}
-											sx={{ textWrap: "balance", whiteSpace: "pre-line" }}
-											dangerouslySetInnerHTML={{ __html: program.description }}
-										/>
-									)}
-								</Paper>
-							))}
-						</Stack>
-					))}
+					morningHallProgram.map((hall) => <TimelineEvent key={hall.name} hall={hall} />)}
 			</Box>
 			<Alert id='timeline-lunch-alert' variant='outlined' icon={false}>
 				<Typography textAlign={"center"} fontSize={"1.5rem"} fontWeight={500}>
 					Обед
 				</Typography>
-				<Chip
-					variant='filled'
-					color='primary'
-					label={
-						<Typography sx={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "white" }}>
-							<AccessTime fontSize='small' />
-							{lunch.time}
-						</Typography>
-					}
-				/>
+				<TimeChip time={lunch.time} color='primary' />
 			</Alert>
 			<Box id='timeline-program-container'>
 				{eveningHallProgram.map((hall) => (
-					<Stack key={hall.name} direction={"column"} gap={"1rem"} width={"100%"}>
-						<Typography fontSize={{ lg: "1.5rem", xs: "1rem" }} fontWeight={500} sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-							<Place color='primary' /> {hall.name}
-						</Typography>
-						{hall.content.map((program, index) => (
-							<Paper
-								key={index}
-								variant='outlined'
-								sx={{ width: "100%", padding: "1rem", borderLeft: "3px solid", borderLeftColor: "primary.main", borderRadius: "0.5rem" }}
-							>
-								<Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-									<Typography fontSize={{ lg: "1.25rem", md: "1rem", sm: "0.75rem", xs: "0.5rem" }} fontWeight={500}>
-										{program.name}
-									</Typography>
-									<Chip
-										variant='outlined'
-										color='info'
-										label={
-											<Typography sx={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.75rem" }}>
-												<AccessTime fontSize='small' />
-												{program.time}
-											</Typography>
-										}
-									/>
-								</Box>
-								{program.speaker && (
-									<Alert
-										variant='outlined'
-										icon={false}
-										sx={{ mt: "1rem", borderColor: "primary.main", color: "primary.main", backgroundColor: "secondary.main", borderRadius: "0.5rem" }}
-									>
-										<Typography fontSize={"1rem"} fontWeight={500} sx={{ textWrap: "balance", whiteSpace: "pre-line" }}>
-											{program.speaker.name}
-										</Typography>
-										<Typography fontSize={{ lg: "1rem", xs: "0.8rem" }} fontWeight={400} sx={{ textWrap: "balance", whiteSpace: "pre-line" }}>
-											{program.speaker.description}
-										</Typography>
-									</Alert>
-								)}
-								{program.description && (
-									<Typography
-										fontSize={{ lg: "1rem", xs: "0.8rem" }}
-										fontWeight={400}
-										mt={"1rem"}
-										sx={{ textWrap: "balance", whiteSpace: "pre-line" }}
-										dangerouslySetInnerHTML={{ __html: program.description }}
-									/>
-								)}
-							</Paper>
-						))}
-					</Stack>
+					<TimelineEvent key={hall.name} hall={hall} />
 				))}
 			</Box>
 			<Stack direction={"column"} gap={"1rem"} width={"100%"} mt={"2rem"}>
 				{eveningProgram.map((program) => (
-					<Paper
-						key={program.name}
-						variant='outlined'
-						sx={{ width: "100%", padding: "1rem", borderLeft: "3px solid", borderLeftColor: "primary.main", borderRadius: "0.5rem" }}
-					>
-						<Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.5rem" }}>
-							<Typography fontSize={{ lg: "1.25rem", xs: "1rem" }} fontWeight={500}>
-								{program.name}
-							</Typography>
-							<Chip
-								size={"small"}
-								variant='outlined'
-								color='info'
-								label={
-									<Typography sx={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.75rem" }}>
-										<AccessTime fontSize='small' />
-										{program.time}
-									</Typography>
-								}
-							/>
-						</Box>
-						{program.speaker && (
-							<Alert
-								variant='outlined'
-								icon={false}
-								sx={{ mt: "1rem", borderColor: "primary.main", color: "white", backgroundColor: "primary.main", borderRadius: "0.5rem" }}
-							>
-								<Typography fontSize={"1rem"} fontWeight={500} sx={{ textWrap: "balance", whiteSpace: "pre-line" }}>
-									{program.speaker.name}
-								</Typography>
-								<Typography fontSize={{ lg: "1rem", xs: "0.8rem" }} fontWeight={400} sx={{ textWrap: "balance", whiteSpace: "pre-line" }}>
-									{program.speaker.description}
-								</Typography>
-							</Alert>
-						)}
-						{program.description && (
-							<Typography fontSize={{ lg: "1rem", xs: "0.8rem" }} fontWeight={400} mt={"1rem"} sx={{ textWrap: "balance", whiteSpace: "pre-line" }}>
-								{program.description}
-							</Typography>
-						)}
-						{program.speakers && (
-							<Alert variant='filled' icon={false} sx={{ mt: "1rem", color: "black", backgroundColor: "#f5f5f5" }}>
-								<Typography sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-									<GroupOutlined fontSize='small' /> Участники
-								</Typography>
-								<Typography fontSize={{ lg: "1rem", xs: "0.8rem" }} fontWeight={400} sx={{ textWrap: "balance", whiteSpace: "pre-line" }}>
-									{program.speakers}
-								</Typography>
-							</Alert>
-						)}
-					</Paper>
+					<EventCard key={program.name} program={program} />
 				))}
 			</Stack>
 			<Chip

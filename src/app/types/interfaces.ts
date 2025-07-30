@@ -81,3 +81,22 @@ export interface TourContentItem {
 	title: string;
 	description: string;
 }
+
+export interface Partner {
+	image: {
+		src: string;
+		width: number;
+		height: number;
+		alt: string;
+	};
+	name: string;
+	description: string;
+	type?: string;
+	body?: string[];
+	video?: {
+		src: string;
+		width: number;
+		height: number;
+		poster: string;
+	};
+}
