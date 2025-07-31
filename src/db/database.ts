@@ -502,7 +502,7 @@ export const tours = [
 		]
 	},
 	{
-		id: "brokertur-zagorodnaya-mechta",
+		id: "brokertur-nedvizhimost-zagorodnaya-mechta",
 		name: "Брокер-тур недвижимость",
 		description: "Специальный Брокер Тур по коттеджным поселкам.",
 		type: "Загородная мечта",
