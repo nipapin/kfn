@@ -73,7 +73,7 @@ export const program: Timeline[] = [
 						time: "12:00 – 13:00",
 						description: "Как построить индивидуальный жилой дом на продажу без налогов",
 						speaker: {
-							name: "Свтлана Матвиенко",
+							name: "Светлана Матвиенко",
 							description: ""
 						}
 					},

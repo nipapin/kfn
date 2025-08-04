@@ -44,8 +44,7 @@ export default function Timeline({ timeline }: TimelineProps) {
 				))}
 			</Stack>
 			<Box id='timeline-program-container'>
-				{morningHallProgram.every((hall) => hall.content.length > 0) &&
-					morningHallProgram.map((hall) => <TimelineEvent key={hall.name} hall={hall} />)}
+				{morningHallProgram.map((hall) => hall.content.length > 0 && <TimelineEvent key={hall.name} hall={hall} />)}
 			</Box>
 			<Alert id='timeline-lunch-alert' variant='outlined' icon={false}>
 				<Typography textAlign={"center"} fontSize={"1.5rem"} fontWeight={500}>
