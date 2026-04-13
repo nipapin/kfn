@@ -26,30 +26,12 @@ import { useRef, useState } from "react";
 import { IMask, IMaskMixin } from "react-imask";
 
 const tariffs = [
-	{
-		name: "Брокер Тур",
-		price: 500
-	},
-	{
-		name: "Базовый",
-		price: 2000
-	},
-	{
-		name: "Таинственный Замок",
-		price: 14000
-	},
-	{
-		name: "Премьер",
-		price: 15000
-	},
-	{
-		name: "Гала Ужин",
-		price: 16000
-	},
-	{
-		name: "VIP",
-		price: 30000
-	}
+	{ name: "Брокер Тур" },
+	{ name: "Базовый" },
+	{ name: "Таинственный Замок" },
+	{ name: "Премьер" },
+	{ name: "Гала Ужин" },
+	{ name: "VIP" }
 ];
 
 const phoneMaskOptions = {
@@ -94,7 +76,10 @@ export default function RegistrationForm({ modal, close }: { modal?: boolean; cl
 				Регистрация на форум
 			</Typography>
 			<Typography id='registration-form-description' fontWeight={"regular"} fontSize={"1rem"} textAlign={"center"} color='white'>
-				Заполните форму ниже, чтобы зарегистрироваться на мероприятие.
+				Количество мест ограничено — успейте забронировать участие по специальной цене раннего бронирования. Заполните форму ниже.
+			</Typography>
+			<Typography fontSize={"0.875rem"} textAlign={"center"} color='white' sx={{ opacity: 0.95, mt: 0.5, px: 1 }}>
+				Стоимость уточняется у оргкомитета. Для членов Гильдии риэлторов Калининграда — скидка 20%.
 			</Typography>
 			<Stack component={"form"} direction={"column"} spacing={2} mt={2} onSubmit={handleSubmit}>
 				<FormControl fullWidth>
@@ -107,8 +92,8 @@ export default function RegistrationForm({ modal, close }: { modal?: boolean; cl
 					>
 						{tariffs.map((tariff, index) => (
 							<MenuItem key={tariff.name} value={index}>
-								{tariff.name}{" "}
-								<Chip size='small' label={tariff.price.toLocaleString("ru", { style: "currency", currency: "RUB" })} sx={{ ml: "auto" }} />
+								{tariff.name}
+								<Chip size='small' label='уточняется' sx={{ ml: "auto" }} />
 							</MenuItem>
 						))}
 					</Select>

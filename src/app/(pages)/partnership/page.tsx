@@ -198,7 +198,7 @@ export default async function GuestsPage() {
 							</Box>
 							<Box sx={{ p: "1rem", color: "white" }}>
 								<Typography fontWeight={700} fontSize={"2rem"} textAlign={"center"}>
-									2025
+									2026
 								</Typography>
 								<Typography fontWeight={500} fontSize={"1rem"} textAlign={"center"}>
 									Актуальные вопросы рынка

@@ -13,24 +13,20 @@ export default function HeroSection() {
 						<Image src='/images/logo_main.png' width={650} height={154} alt='hero' style={{ objectFit: "contain", width: "100%", height: "auto" }} />
 					</Box>
 					<Typography component={"h1"} fontSize={"1.5rem"} fontWeight={"regular"} mt={2} textAlign={"left"}>
-						Ваш ключ к{" "}
 						<Typography component={"span"} fontWeight={"bold"} color='primary' fontSize={"inherit"}>
-							эксклюзивной информации
+							Главное событие рынка недвижимости
 						</Typography>{" "}
-						и{" "}
-						<Typography component={"span"} fontWeight={"bold"} color='primary' fontSize={"inherit"}>
-							новым возможностям
-						</Typography>{" "}
-						в сфере недвижимости.
+						в самом западном регионе России.
 					</Typography>
 					<Divider />
 					<Typography textAlign={"left"}>
-						Получите ценные консультации от федеральных бизнес-тренеров и найдите современные решения для актуальных вызовов.
+						Гильдия риэлторов Калининграда приглашает вас на ежегодный форум, где мы обсудим будущее рынка, обменяемся лучшими практиками и найдём
+						надёжных партнёров.
 					</Typography>
 					<Box id='hero-section-cards'>
 						<Card variant='outlined' sx={{ borderRadius: "1rem", width: "100%" }}>
 							<CardHeader
-								title='06.08 - 09.08.2025'
+								title='23.07 - 26.07.2026'
 								subheader='4 дня мероприятий'
 								avatar={<CalendarMonth fontSize='large' color='primary' />}
 								slotProps={{ title: { fontWeight: "bolder" } }}
@@ -38,7 +34,7 @@ export default function HeroSection() {
 						</Card>
 						<Card variant='outlined' sx={{ borderRadius: "1rem", width: "100%" }}>
 							<CardHeader
-								title='Radisson Blu Hotel'
+								title='Конференц-зал отеля Radisson Blu'
 								subheader='Калининград, пл. Победы, 10'
 								avatar={<PlaceOutlined fontSize='large' color='primary' />}
 								slotProps={{ title: { fontWeight: "bolder" } }}

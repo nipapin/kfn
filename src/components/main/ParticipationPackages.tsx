@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, Close } from "@mui/icons-material";
-import { Box, List, ListItemText, ListItem, Paper, Stack, Typography, ListItemIcon, Button, Divider, useMediaQuery, useTheme } from "@mui/material";
+import { Box, List, ListItemText, ListItem, Paper, Stack, Typography, ListItemIcon, Divider, useMediaQuery, useTheme } from "@mui/material";
 import ModalRegistration from "../shared/ModalRegistration";
 import Title from "../shared/Title";
 
@@ -9,7 +9,6 @@ const packages = [
 	{
 		id: 1,
 		title: "Базовый",
-		price: 2000,
 		benefit: [
 			{ available: true, label: "Выставка застройщиков" },
 			{ available: true, label: "Пленарное заседание" },
@@ -27,7 +26,6 @@ const packages = [
 	{
 		id: 2,
 		title: "Премьер",
-		price: 15000,
 		benefit: [
 			{ available: true, label: "Выставка застройщиков" },
 			{ available: true, label: "Пленарное заседание" },
@@ -45,7 +43,6 @@ const packages = [
 	{
 		id: 3,
 		title: "VIP",
-		price: 30000,
 		benefit: [
 			{ available: true, label: "Выставка застройщиков" },
 			{ available: true, label: "Пленарное заседание" },
@@ -80,7 +77,7 @@ export default function ParticipationPackages() {
 								{pack.title}
 							</Typography>
 							<Typography variant='h3' fontSize={"2rem"} textAlign={"center"} fontWeight={"bold"} mt={1}>
-								{pack.price.toLocaleString("ru", { style: "currency", currency: "RUB", maximumFractionDigits: 0 })}
+								уточняется
 							</Typography>
 							<Divider sx={{ my: 2 }} />
 							<Typography fontSize={"1rem"} my={1}>
@@ -97,6 +94,9 @@ export default function ParticipationPackages() {
 						</Paper>
 					))}
 				</Stack>
+				<Typography textAlign='center' sx={{ mt: 3, maxWidth: "36rem", mx: "auto", px: 1 }} color='text.secondary'>
+					Стоимость участия уточняется у оргкомитета. Для членов Гильдии риэлторов Калининграда — скидка 20%.
+				</Typography>
 				<ModalRegistration hideOnScroll={false} />
 			</Box>
 		</Box>
