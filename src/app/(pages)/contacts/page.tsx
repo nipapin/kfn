@@ -4,9 +4,9 @@ import Image from "next/image";
 
 const contacts = [
 	{
-		name: "Борсиев Константин Валерьевич",
-		phone: "+7 (921) 851-95-19",
-		avatar: "/images/contacts/borsiev.jpg"
+		name: "Капарулина Ирина Александровна",
+		phone: "+7 (911) 070-86-28",
+		avatar: "/images/contacts/kaparulina.jpeg"
 	},
 	{
 		name: "Шавкуненко Диана Владимировна",
@@ -14,9 +14,9 @@ const contacts = [
 		avatar: "/images/contacts/shavkunenko.jpg"
 	},
 	{
-		name: "Капарулина Ирина Александровна",
-		phone: "+7 (911) 070-86-28",
-		avatar: "/images/contacts/kaparulina.jpeg"
+		name: "Борсиев Константин Валерьевич",
+		phone: "+7 (921) 851-95-19",
+		avatar: "/images/contacts/borsiev.jpg"
 	},
 	{
 		name: "Шелевер Светлана Николаевна",
@@ -27,11 +27,6 @@ const contacts = [
 		name: "Ненахова Оксана Александровна",
 		phone: "+7 (921) 103-41-41",
 		avatar: "/images/contacts/nenahova.jpg"
-	},
-	{
-		name: "Гилева Татьяна Павловна",
-		phone: "+7 (962) 255-64-90",
-		avatar: "/images/contacts/gileva.jpg"
 	}
 ];
 

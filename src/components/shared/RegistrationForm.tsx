@@ -5,7 +5,6 @@ import { CheckCircle, Close, Group } from "@mui/icons-material";
 import {
 	Box,
 	Button,
-	Chip,
 	CircularProgress,
 	Dialog,
 	DialogContent,
@@ -25,14 +24,7 @@ import NextLink from "next/link";
 import { useRef, useState } from "react";
 import { IMask, IMaskMixin } from "react-imask";
 
-const tariffs = [
-	{ name: "Брокер Тур" },
-	{ name: "Базовый" },
-	{ name: "Таинственный Замок" },
-	{ name: "Премьер" },
-	{ name: "Гала Ужин" },
-	{ name: "VIP" }
-];
+const tariffs = [{ name: "Базовый" }, { name: "Премьер" }, { name: "VIP" }];
 
 const phoneMaskOptions = {
 	mask: "+7 000 000 00 00",
@@ -79,7 +71,7 @@ export default function RegistrationForm({ modal, close }: { modal?: boolean; cl
 				Количество мест ограничено — успейте забронировать участие по специальной цене раннего бронирования. Заполните форму ниже.
 			</Typography>
 			<Typography fontSize={"0.875rem"} textAlign={"center"} color='white' sx={{ opacity: 0.95, mt: 0.5, px: 1 }}>
-				Стоимость уточняется у оргкомитета. Для членов Гильдии риэлторов Калининграда — скидка 20%.
+				Цены тарифов указаны на главной странице. Для членов Гильдии риэлторов Калининграда — скидка 20%.
 			</Typography>
 			<Stack component={"form"} direction={"column"} spacing={2} mt={2} onSubmit={handleSubmit}>
 				<FormControl fullWidth>
@@ -87,13 +79,12 @@ export default function RegistrationForm({ modal, close }: { modal?: boolean; cl
 						fullWidth
 						color='primary'
 						slotProps={{ input: { sx: { backgroundColor: "white", borderRadius: "0.5rem" } } }}
-						defaultValue={1}
+						defaultValue={0}
 						name='tariff'
 					>
 						{tariffs.map((tariff, index) => (
 							<MenuItem key={tariff.name} value={index}>
 								{tariff.name}
-								<Chip size='small' label='уточняется' sx={{ ml: "auto" }} />
 							</MenuItem>
 						))}
 					</Select>

@@ -17,7 +17,7 @@ export default async function ProgrammPage({ params }: ProgrammPageProps) {
 				<Box sx={{ maxWidth: "720px", mx: "auto", mb: 3, px: { xs: 1, sm: 0 } }}>
 					<Typography variant='body1' sx={{ textWrap: "balance", textAlign: { xs: "left", sm: "center" } }}>
 						Форум проходит с <strong>23 по 26 июля 2026 года</strong>. Ниже — подробное расписание основных дней деловой программы (
-						<strong>23 и 24 июля</strong>). Остальные дни и активности будут дополнены; следите за обновлениями на сайте.
+						<strong>23 и 24 июля</strong>). Программа форума и наполнение билетов будут дополняться — следите за обновлениями на сайте.
 					</Typography>
 				</Box>
 			)}

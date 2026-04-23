@@ -1,18 +1,7 @@
 import { entertainments } from "@/db/database";
 import "@/styles/additional-entertainments.css";
-import { ArrowForward } from "@mui/icons-material";
-import { Box, Button, Card, CardActions, CardContent, CardHeader, CardMedia, SxProps } from "@mui/material";
-import NextLink from "next/link";
+import { Box, Card, CardHeader, CardMedia, SxProps, Typography } from "@mui/material";
 import Title from "../shared/Title";
-import { translate } from "@/utilities/translator";
-
-const getFirstSentence = (description: string) => {
-	const index_1 = description.indexOf(".");
-	const index_2 = description.indexOf("!");
-	const index_3 = description.indexOf("?");
-	const index = Math.min(...[index_1, index_2, index_3].filter((index) => index > -1));
-	return description.slice(0, index + 1);
-};
 
 function AdditionalEntertainments(props: { sx?: SxProps; special?: boolean }) {
 	return (
@@ -29,18 +18,13 @@ function AdditionalEntertainments(props: { sx?: SxProps; special?: boolean }) {
 									subheader={`${pack.price.toLocaleString("ru", { style: "currency", currency: "RUB", maximumFractionDigits: 0 })}`}
 								/>
 								<CardMedia component={"img"} src={pack.image} alt={pack.title} sx={{ height: "200px" }} />
-								<CardContent>{getFirstSentence(pack.description)}</CardContent>
-								<CardActions sx={{ mt: "auto", "& a": { ml: "auto" } }}>
-									<NextLink href={`/additional-entertainments/${translate(pack.title)}`} passHref>
-										<Button variant='text' color='primary' endIcon={<ArrowForward />}>
-											Подробнее
-										</Button>
-									</NextLink>
-								</CardActions>
 							</Card>
 						</Box>
 					))}
 				</Box>
+				<Typography textAlign='center' sx={{ mt: 3, maxWidth: "36rem", mx: "auto", px: 1 }} color='text.secondary'>
+					Программа мероприятий формируется — подробности появятся позже.
+				</Typography>
 			</Box>
 		</Box>
 	);

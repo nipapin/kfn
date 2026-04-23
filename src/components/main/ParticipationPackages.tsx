@@ -9,6 +9,7 @@ const packages = [
 	{
 		id: 1,
 		title: "Базовый",
+		price: 2500,
 		benefit: [
 			{ available: true, label: "Выставка застройщиков" },
 			{ available: true, label: "Пленарное заседание" },
@@ -16,7 +17,6 @@ const packages = [
 			{ available: true, label: "Образовательные секции" },
 			{ available: true, label: "Квест в зоне выставки" },
 			{ available: false, label: "Путешествие в загадочный замок тевтонского ордена" },
-			{ available: false, label: "Брокер тур на выбор" },
 			{ available: false, label: "Доступ в ВИП зону" },
 			{ available: false, label: "Фуршет в ВИП зоне" },
 			{ available: false, label: "Гала ужин" }
@@ -26,6 +26,7 @@ const packages = [
 	{
 		id: 2,
 		title: "Премьер",
+		price: 15000,
 		benefit: [
 			{ available: true, label: "Выставка застройщиков" },
 			{ available: true, label: "Пленарное заседание" },
@@ -33,7 +34,6 @@ const packages = [
 			{ available: true, label: "Образовательные секции" },
 			{ available: true, label: "Квест в зоне выставки" },
 			{ available: true, label: "Путешествие в загадочный замок тевтонского ордена" },
-			{ available: true, label: "Брокер тур на выбор" },
 			{ available: false, label: "Доступ в ВИП зону" },
 			{ available: false, label: "Фуршет в ВИП зоне" },
 			{ available: false, label: "Гала ужин" }
@@ -43,6 +43,7 @@ const packages = [
 	{
 		id: 3,
 		title: "VIP",
+		price: 30000,
 		benefit: [
 			{ available: true, label: "Выставка застройщиков" },
 			{ available: true, label: "Пленарное заседание" },
@@ -50,7 +51,6 @@ const packages = [
 			{ available: true, label: "Образовательные секции" },
 			{ available: true, label: "Квест в зоне выставки" },
 			{ available: true, label: "Путешествие в загадочный замок тевтонского ордена" },
-			{ available: true, label: "Брокер тур на выбор" },
 			{ available: true, label: "Доступ в ВИП зону" },
 			{ available: true, label: "Фуршет в ВИП зоне" },
 			{ available: true, label: "Гала ужин" }
@@ -77,7 +77,7 @@ export default function ParticipationPackages() {
 								{pack.title}
 							</Typography>
 							<Typography variant='h3' fontSize={"2rem"} textAlign={"center"} fontWeight={"bold"} mt={1}>
-								уточняется
+								{pack.price.toLocaleString("ru", { style: "currency", currency: "RUB", maximumFractionDigits: 0 })}
 							</Typography>
 							<Divider sx={{ my: 2 }} />
 							<Typography fontSize={"1rem"} my={1}>
@@ -95,7 +95,7 @@ export default function ParticipationPackages() {
 					))}
 				</Stack>
 				<Typography textAlign='center' sx={{ mt: 3, maxWidth: "36rem", mx: "auto", px: 1 }} color='text.secondary'>
-					Стоимость участия уточняется у оргкомитета. Для членов Гильдии риэлторов Калининграда — скидка 20%.
+					Для членов Гильдии риэлторов Калининграда — скидка 20%. Программа форума и наполнение билетов будут дополняться — следите за обновлениями.
 				</Typography>
 				<ModalRegistration hideOnScroll={false} />
 			</Box>

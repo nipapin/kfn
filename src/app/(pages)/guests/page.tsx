@@ -1,7 +1,6 @@
 import TelegramBanner from "@/components/shared/TelegramBanner";
-import { AirportShuttle, CalendarMonthOutlined, CameraAltOutlined, HomeOutlined, Phone, PlaceOutlined, Telegram } from "@mui/icons-material";
-import { Box, Button, Card, CardContent, CardHeader, Chip, Container, Grid, Paper, Stack, Typography } from "@mui/material";
-import NextLink from "next/link";
+import { AirportShuttle, CalendarMonthOutlined, CameraAltOutlined, HomeOutlined, PlaceOutlined } from "@mui/icons-material";
+import { Box, Card, CardContent, CardHeader, Chip, Container, Grid, Paper, Stack, Typography } from "@mui/material";
 
 export default async function GuestsPage() {
 	return (
@@ -211,36 +210,6 @@ export default async function GuestsPage() {
 						Мы с радостью окажем вам всю необходимую помощь, чтобы ваше пребывание стало действительно особенным и запоминающимся! По всем вопросам
 						размещения, бронирования, заказа каршеринга и экскурсий можно связаться по телефону:
 					</Typography>
-				</Paper>
-				<Paper
-					elevation={0}
-					sx={{
-						backgroundColor: "primary.main",
-						color: "white",
-						display: "flex",
-						flexDirection: "column",
-						alignItems: "center",
-						justifyContent: "center",
-						p: "2rem",
-						borderRadius: "1rem"
-					}}
-				>
-					<Typography textAlign={"center"} fontSize={"1.5rem"} fontWeight={500}>
-						Куратор по работе с приезжими
-					</Typography>
-					<Box sx={{ width: "100px", height: "5px", backgroundColor: "white", mt: "0.5rem" }} />
-					<Typography fontSize={"1.25rem"} fontWeight={500} mt={"0.5rem"}>
-						Гилева Татьяна Павловна
-					</Typography>
-					<Typography sx={{ display: "flex", alignItems: "center", gap: "0.5rem", mt: "0.5rem" }}>
-						<Phone />
-						+7 (962) 255-64-90
-					</Typography>
-					<NextLink href={"tel:+79622556490"}>
-						<Button variant='contained' color='secondary' sx={{ mt: "1rem" }}>
-							Связаться сейчас
-						</Button>
-					</NextLink>
 				</Paper>
 			</Stack>
 		</Container>
