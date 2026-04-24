@@ -31,10 +31,10 @@ export default function Footer() {
 							Контакты оргкомитета
 						</Typography>
 						<Typography variant='body2' sx={{ opacity: 0.8 }}>
-							Телефон: +7 (4012) XX-XX-XX
+							Телефон: +7 (963) 738-21-39
 						</Typography>
 						<Typography variant='body2' sx={{ opacity: 0.8 }}>
-							Email: forum@realtor39.ru
+							Email: grkaliningrada@gmail.com
 						</Typography>
 						<Typography variant='body2' sx={{ opacity: 0.8 }}>
 							Сайт: grk39.ru
