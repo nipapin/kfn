@@ -3,6 +3,8 @@
 import { Partner } from "@/app/types/interfaces";
 import {
 	Add as AddIcon,
+	ArrowDownward as ArrowDownIcon,
+	ArrowUpward as ArrowUpIcon,
 	Close as CloseIcon,
 	Delete as DeleteIcon,
 	Edit as EditIcon,
@@ -46,7 +48,6 @@ type FormState = {
 	body: string;
 	image: { src: string; width: number; height: number; alt: string };
 	video: { src: string; width: number; height: number; poster: string };
-	sortOrder: number;
 	isActive: boolean;
 };
 
@@ -57,7 +58,6 @@ const emptyForm: FormState = {
 	body: "",
 	image: { src: "", width: 0, height: 0, alt: "" },
 	video: { src: "", width: 0, height: 0, poster: "" },
-	sortOrder: 0,
 	isActive: true
 };
 
@@ -74,11 +74,10 @@ const partnerToForm = (p: Partner): FormState => ({
 		height: p.video?.height ?? 0,
 		poster: p.video?.poster ?? ""
 	},
-	sortOrder: p.sortOrder ?? 0,
 	isActive: p.isActive ?? true
 });
 
-const formToPartner = (f: FormState): Partner => ({
+const formToPartner = (f: FormState, sortOrder: number): Partner => ({
 	id: f.id,
 	name: f.name,
 	type: f.type || undefined,
@@ -91,7 +90,7 @@ const formToPartner = (f: FormState): Partner => ({
 		: undefined,
 	image: f.image,
 	video: f.video.src ? f.video : undefined,
-	sortOrder: f.sortOrder,
+	sortOrder,
 	isActive: f.isActive
 });
 
@@ -160,7 +159,7 @@ export default function PartnersAdmin() {
 	}, []);
 
 	const handleAdd = () => {
-		setForm({ ...emptyForm, sortOrder: partners.length });
+		setForm({ ...emptyForm });
 		setOpen(true);
 	};
 
@@ -186,10 +185,12 @@ export default function PartnersAdmin() {
 		setSaving(true);
 		try {
 			const isUpdate = Boolean(form.id);
+			const existing = partners.find((p) => p.id === form.id);
+			const nextSortOrder = isUpdate ? existing?.sortOrder ?? 0 : (partners[partners.length - 1]?.sortOrder ?? 0) + 10;
 			const res = await fetch("/api/partners", {
 				method: isUpdate ? "PUT" : "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(formToPartner(form))
+				body: JSON.stringify(formToPartner(form, nextSortOrder))
 			});
 			if (!res.ok) {
 				const err = await res.json().catch(() => ({}));
@@ -203,6 +204,31 @@ export default function PartnersAdmin() {
 		} finally {
 			setSaving(false);
 		}
+	};
+
+	const persistOrder = async (ordered: Partner[]) => {
+		const ids = ordered.map((p) => p.id).filter((id): id is number => typeof id === "number");
+		try {
+			const res = await fetch("/api/partners/reorder", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ ids })
+			});
+			if (!res.ok) throw new Error("Не удалось сохранить порядок");
+		} catch (e) {
+			setToast({ type: "error", message: e instanceof Error ? e.message : "Ошибка" });
+			loadPartners(false);
+		}
+	};
+
+	const handleMove = (index: number, direction: -1 | 1) => {
+		const target = index + direction;
+		if (target < 0 || target >= partners.length) return;
+		const next = partners.slice();
+		[next[index], next[target]] = [next[target], next[index]];
+		const reindexed = next.map((p, i) => ({ ...p, sortOrder: i * 10 }));
+		setPartners(reindexed);
+		persistOrder(reindexed);
 	};
 
 	const handleDelete = async () => {
@@ -312,10 +338,10 @@ export default function PartnersAdmin() {
 					<Table>
 						<TableHead>
 							<TableRow>
+								<TableCell width={90} align='center'>Порядок</TableCell>
 								<TableCell>Лого</TableCell>
 								<TableCell>Название</TableCell>
 								<TableCell>Тип</TableCell>
-								<TableCell width={100}>Порядок</TableCell>
 								<TableCell width={120}>Активен</TableCell>
 								<TableCell width={140} align='right'>
 									Действия
@@ -336,8 +362,26 @@ export default function PartnersAdmin() {
 									</TableCell>
 								</TableRow>
 							) : (
-								partners.map((partner) => (
+								partners.map((partner, index) => (
 									<TableRow key={partner.id} hover>
+										<TableCell align='center' sx={{ p: 0.5 }}>
+											<Stack direction='column' alignItems='center' spacing={0}>
+												<Tooltip title='Выше'>
+													<span>
+														<IconButton size='small' onClick={() => handleMove(index, -1)} disabled={index === 0}>
+															<ArrowUpIcon fontSize='small' />
+														</IconButton>
+													</span>
+												</Tooltip>
+												<Tooltip title='Ниже'>
+													<span>
+														<IconButton size='small' onClick={() => handleMove(index, 1)} disabled={index === partners.length - 1}>
+															<ArrowDownIcon fontSize='small' />
+														</IconButton>
+													</span>
+												</Tooltip>
+											</Stack>
+										</TableCell>
 										<TableCell>
 											<Avatar src={partner.image.src} variant='rounded' sx={{ width: 56, height: 56, bgcolor: "grey.100" }}>
 												{partner.name.charAt(0)}
@@ -353,7 +397,6 @@ export default function PartnersAdmin() {
 											</Typography>
 										</TableCell>
 										<TableCell>{partner.type ? <Chip size='small' label={partner.type} color='primary' /> : <Typography variant='caption' color='text.secondary'>—</Typography>}</TableCell>
-										<TableCell>{partner.sortOrder ?? 0}</TableCell>
 										<TableCell>
 											<Switch checked={partner.isActive ?? true} onChange={() => handleToggleActive(partner)} size='small' />
 										</TableCell>
@@ -515,18 +558,12 @@ export default function PartnersAdmin() {
 							)}
 						</Paper>
 
-						<Stack direction='row' spacing={2} alignItems='center'>
-							<TextField
-								label='Порядок сортировки'
-								type='number'
-								value={form.sortOrder}
-								onChange={(e) => setForm({ ...form, sortOrder: Number(e.target.value) })}
-								sx={{ width: 200 }}
-							/>
-							<Stack direction='row' alignItems='center' spacing={1}>
-								<Switch checked={form.isActive} onChange={(e) => setForm({ ...form, isActive: e.target.checked })} />
-								<Typography>Показывать на сайте</Typography>
-							</Stack>
+						<Stack direction='row' alignItems='center' spacing={1}>
+							<Switch checked={form.isActive} onChange={(e) => setForm({ ...form, isActive: e.target.checked })} />
+							<Typography>Показывать на сайте</Typography>
+							<Typography variant='caption' color='text.secondary' sx={{ ml: 2 }}>
+								Порядок отображения задаётся стрелками в таблице.
+							</Typography>
 						</Stack>
 					</Stack>
 				</DialogContent>
