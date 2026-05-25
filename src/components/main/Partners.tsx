@@ -1,13 +1,18 @@
 "use client";
 
+import { Partner } from "@/app/types/interfaces";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import PartnerCard from "../layout/PartnerCard";
 import Title from "../shared/Title";
-import { partners } from "@/db/database";
 
-export default function Partners() {
+interface PartnersProps {
+	partners: Partner[];
+}
+
+export default function Partners({ partners }: PartnersProps) {
 	const { breakpoints } = useTheme();
 	const isMobile = useMediaQuery(breakpoints.down("md"));
+	if (!partners || partners.length === 0) return null;
 	return (
 		<Box
 			sx={{
@@ -29,7 +34,7 @@ export default function Partners() {
 					const isLast = index === self.length - 1;
 					return (
 						<PartnerCard
-							key={partner.name}
+							key={partner.id ?? partner.name}
 							image={partner.image}
 							name={partner.name}
 							description={partner.description}

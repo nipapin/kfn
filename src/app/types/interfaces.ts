@@ -83,6 +83,7 @@ export interface TourContentItem {
 }
 
 export interface Partner {
+	id?: number;
 	image: {
 		src: string;
 		width: number;
@@ -99,4 +100,6 @@ export interface Partner {
 		height: number;
 		poster: string;
 	};
+	sortOrder?: number;
+	isActive?: boolean;
 }

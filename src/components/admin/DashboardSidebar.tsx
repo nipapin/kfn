@@ -1,41 +1,37 @@
+"use client";
+
 import { List, ListItemText, ListItem, Paper, ListItemButton, ListItemIcon } from "@mui/material";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import EventIcon from "@mui/icons-material/Event";
+import HandshakeIcon from "@mui/icons-material/Handshake";
 import NextLink from "next/link";
+import { usePathname } from "next/navigation";
+
+const items = [
+	{ href: "/dashboard/applications", label: "Заявки", icon: <AssignmentIcon />, disabled: false },
+	{ href: "/dashboard/events", label: "Мероприятия", icon: <EventIcon />, disabled: true },
+	{ href: "/dashboard/partners", label: "Партнёры", icon: <HandshakeIcon />, disabled: false }
+];
 
 export default function DashboardSidebar() {
+	const pathname = usePathname();
 	return (
 		<Paper sx={{ borderRadius: "1rem", height: "fit-content", padding: "1rem", "& a": { textDecoration: "none", color: "inherit", width: "100%" } }}>
 			<List disablePadding>
-				<ListItem disablePadding>
-					<NextLink href='/dashboard/applications' passHref>
-						<ListItemButton sx={{ borderRadius: "0.5rem" }}>
-							<ListItemIcon sx={{ minWidth: "2rem" }}>
-								<AssignmentIcon />
-							</ListItemIcon>
-							<ListItemText primary='Заявки' />
+				{items.map((item) => {
+					const selected = pathname === item.href;
+					const inner = (
+						<ListItemButton sx={{ borderRadius: "0.5rem" }} disabled={item.disabled} selected={selected}>
+							<ListItemIcon sx={{ minWidth: "2rem" }}>{item.icon}</ListItemIcon>
+							<ListItemText primary={item.label} />
 						</ListItemButton>
-					</NextLink>
-				</ListItem>
-				<ListItem disablePadding>
-					<NextLink href='/dashboard/events' passHref>
-						<ListItemButton sx={{ borderRadius: "0.5rem" }} disabled>
-							<ListItemIcon sx={{ minWidth: "2rem" }}>
-								<AssignmentIcon />
-							</ListItemIcon>
-							<ListItemText primary='Мероприятия' />
-						</ListItemButton>
-					</NextLink>
-				</ListItem>
-				<ListItem disablePadding>
-					<NextLink href='/dashboard/partners' passHref>
-						<ListItemButton sx={{ borderRadius: "0.5rem" }} disabled>
-							<ListItemIcon sx={{ minWidth: "2rem" }}>
-								<AssignmentIcon />
-							</ListItemIcon>
-							<ListItemText primary='Партнеры' />
-						</ListItemButton>
-					</NextLink>
-				</ListItem>
+					);
+					return (
+						<ListItem key={item.href} disablePadding>
+							{item.disabled ? inner : <NextLink href={item.href} passHref>{inner}</NextLink>}
+						</ListItem>
+					);
+				})}
 			</List>
 		</Paper>
 	);

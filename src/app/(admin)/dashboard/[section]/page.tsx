@@ -1,4 +1,5 @@
 import AdminDashboard from "@/components/admin/AdminDashboard";
+import PartnersAdmin from "@/components/admin/PartnersAdmin";
 import { notFound } from "next/navigation";
 
 interface DashboardSectionPageProps {
@@ -9,6 +10,9 @@ export default async function DashboardSectionPage({ params }: DashboardSectionP
 	const { section } = await params;
 	if (section === "applications") {
 		return <AdminDashboard />;
+	}
+	if (section === "partners") {
+		return <PartnersAdmin />;
 	}
 	return notFound();
 }
