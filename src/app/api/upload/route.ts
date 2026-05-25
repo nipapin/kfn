@@ -1,5 +1,6 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { isS3Enabled, uploadToS3 } from "@/actions/storage";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -40,18 +41,23 @@ export async function POST(request: NextRequest) {
 		return NextResponse.json({ message: "Файл больше 25MB" }, { status: 400 });
 	}
 	const folder = ALLOWED_FOLDERS.has(folderRaw) ? folderRaw : "partners";
-
-	const buffer = Buffer.from(await file.arrayBuffer());
-	const targetDir = path.join(process.cwd(), "public", "images", folder);
-	await mkdir(targetDir, { recursive: true });
 	const filename = slugify(file.name);
-	const filepath = path.join(targetDir, filename);
-	await writeFile(filepath, buffer);
+	const buffer = Buffer.from(await file.arrayBuffer());
 
-	return NextResponse.json({
-		src: `/images/${folder}/${filename}`,
-		filename,
-		size: file.size,
-		type: file.type
-	});
+	try {
+		if (isS3Enabled) {
+			const { src } = await uploadToS3({ folder, filename, body: buffer, contentType: file.type });
+			return NextResponse.json({ src, filename, size: file.size, type: file.type, storage: "s3" });
+		}
+
+		const targetDir = path.join(process.cwd(), "public", "images", folder);
+		await mkdir(targetDir, { recursive: true });
+		const filepath = path.join(targetDir, filename);
+		await writeFile(filepath, buffer);
+		return NextResponse.json({ src: `/images/${folder}/${filename}`, filename, size: file.size, type: file.type, storage: "local" });
+	} catch (error) {
+		console.error("upload failed:", error);
+		const message = error instanceof Error ? error.message : "Не удалось загрузить файл";
+		return NextResponse.json({ message }, { status: 500 });
+	}
 }

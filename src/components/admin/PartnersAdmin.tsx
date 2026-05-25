@@ -142,8 +142,8 @@ export default function PartnersAdmin() {
 	const videoInputRef = useRef<HTMLInputElement>(null);
 	const posterInputRef = useRef<HTMLInputElement>(null);
 
-	const loadPartners = async () => {
-		setLoading(true);
+	const loadPartners = async (showSpinner = false) => {
+		if (showSpinner) setLoading(true);
 		try {
 			const res = await fetch("/api/partners?all=true");
 			const data = (await res.json()) as Partner[];
@@ -151,12 +151,12 @@ export default function PartnersAdmin() {
 		} catch {
 			setToast({ type: "error", message: "Не удалось загрузить партнёров" });
 		} finally {
-			setLoading(false);
+			if (showSpinner) setLoading(false);
 		}
 	};
 
 	useEffect(() => {
-		loadPartners();
+		loadPartners(true);
 	}, []);
 
 	const handleAdd = () => {
@@ -197,7 +197,7 @@ export default function PartnersAdmin() {
 			}
 			setToast({ type: "success", message: isUpdate ? "Партнёр обновлён" : "Партнёр создан" });
 			setOpen(false);
-			await loadPartners();
+			await loadPartners(false);
 		} catch (e) {
 			setToast({ type: "error", message: e instanceof Error ? e.message : "Ошибка сохранения" });
 		} finally {
@@ -210,24 +210,26 @@ export default function PartnersAdmin() {
 		try {
 			const res = await fetch(`/api/partners?id=${deleteId}`, { method: "DELETE" });
 			if (!res.ok) throw new Error("Не удалось удалить");
+			setPartners((prev) => prev.filter((p) => p.id !== deleteId));
 			setToast({ type: "success", message: "Партнёр удалён" });
 			setDeleteId(null);
-			await loadPartners();
 		} catch (e) {
 			setToast({ type: "error", message: e instanceof Error ? e.message : "Ошибка удаления" });
 		}
 	};
 
 	const handleToggleActive = async (partner: Partner) => {
+		const nextValue = !(partner.isActive ?? true);
+		setPartners((prev) => prev.map((p) => (p.id === partner.id ? { ...p, isActive: nextValue } : p)));
 		try {
 			const res = await fetch("/api/partners", {
 				method: "PUT",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ ...partner, isActive: !(partner.isActive ?? true) })
+				body: JSON.stringify({ ...partner, isActive: nextValue })
 			});
 			if (!res.ok) throw new Error("Не удалось изменить статус");
-			await loadPartners();
 		} catch (e) {
+			setPartners((prev) => prev.map((p) => (p.id === partner.id ? { ...p, isActive: partner.isActive ?? true } : p)));
 			setToast({ type: "error", message: e instanceof Error ? e.message : "Ошибка" });
 		}
 	};
