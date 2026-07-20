@@ -5,13 +5,17 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import EventIcon from "@mui/icons-material/Event";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+import CelebrationIcon from "@mui/icons-material/Celebration";
+import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 
 const items = [
 	{ href: "/dashboard/applications", label: "Заявки", icon: <AssignmentIcon />, disabled: false },
 	{ href: "/dashboard/packages", label: "Тарифы", icon: <LocalOfferIcon />, disabled: false },
-	{ href: "/dashboard/events", label: "Мероприятия", icon: <EventIcon />, disabled: true },
+	{ href: "/dashboard/program", label: "Программа", icon: <EventIcon />, disabled: false },
+	{ href: "/dashboard/entertainments", label: "Мероприятия", icon: <CelebrationIcon />, disabled: false },
+	{ href: "/dashboard/tours", label: "Туры", icon: <DirectionsBusIcon />, disabled: false },
 	{ href: "/dashboard/partners", label: "Партнёры", icon: <HandshakeIcon />, disabled: false }
 ];
 
@@ -30,7 +34,13 @@ export default function DashboardSidebar() {
 					);
 					return (
 						<ListItem key={item.href} disablePadding>
-							{item.disabled ? inner : <NextLink href={item.href} passHref>{inner}</NextLink>}
+							{item.disabled ? (
+								inner
+							) : (
+								<NextLink href={item.href} passHref>
+									{inner}
+								</NextLink>
+							)}
 						</ListItem>
 					);
 				})}

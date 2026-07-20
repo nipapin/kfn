@@ -1,12 +1,17 @@
 import { SxProps } from "@mui/material";
 
 export interface Entertainment {
+	/** Numeric DB primary key (admin mutations) */
+	rowId?: number;
+	/** Public slug used in URLs */
 	id: string;
 	title: string;
 	description: string;
 	price: number;
 	image: string;
 	special?: boolean;
+	sortOrder?: number;
+	isActive?: boolean;
 }
 
 export interface Program {
@@ -52,12 +57,17 @@ export interface Hall {
 }
 
 export interface Timeline {
+	/** Numeric DB primary key (admin mutations) */
+	rowId?: number;
+	/** Program group slug, e.g. "business" */
 	id: string;
 	title: string;
 	description: string;
 	date: string;
 	halls: Hall[];
 	content: TimelineItem[];
+	sortOrder?: number;
+	isActive?: boolean;
 }
 
 export interface ModalRegistrationProps {
@@ -66,6 +76,9 @@ export interface ModalRegistrationProps {
 }
 
 export interface TourItem {
+	/** Numeric DB primary key (admin mutations) */
+	rowId?: number;
+	/** Public slug used in URLs */
 	id: string;
 	name: string;
 	type: string;
@@ -73,6 +86,8 @@ export interface TourItem {
 	content: TourContentItem[];
 	price: number;
 	image: string;
+	sortOrder?: number;
+	isActive?: boolean;
 }
 
 export interface TourContentItem {

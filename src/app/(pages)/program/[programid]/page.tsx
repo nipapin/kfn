@@ -1,7 +1,7 @@
+import { getEntertainments, getProgramDays } from "@/actions";
 import { ProgrammPageProps } from "@/app/types/interfaces";
 import AdditionalEntertainments from "@/components/main/AdditionalEntertainments";
 import Timeline from "@/components/Timeline";
-import { program } from "@/db/database";
 import "@/styles/program.css";
 import { Box, Container, Divider, Typography } from "@mui/material";
 import { Fragment } from "react";
@@ -9,7 +9,10 @@ import { Fragment } from "react";
 export default async function ProgrammPage({ params }: ProgrammPageProps) {
 	const { programid } = await params;
 
-	const timelines = program.filter((item) => item.id === programid);
+	const [timelines, entertainments] = await Promise.all([
+		programid === "business" ? getProgramDays(programid) : Promise.resolve([]),
+		programid === "entertainment" ? getEntertainments() : Promise.resolve([])
+	]);
 
 	return (
 		<Container id='program-page-container'>
@@ -23,12 +26,12 @@ export default async function ProgrammPage({ params }: ProgrammPageProps) {
 			)}
 			{programid === "business" &&
 				timelines.map((timeline, index, self) => (
-					<Fragment key={timeline.date}>
+					<Fragment key={timeline.rowId ?? `${timeline.date}-${index}`}>
 						<Timeline timeline={timeline} />
 						{index < self.length - 1 && <Divider sx={{ my: "2rem" }} />}
 					</Fragment>
 				))}
-			{programid === "entertainment" && <AdditionalEntertainments sx={{ height: "auto" }} special={true} />}
+			{programid === "entertainment" && <AdditionalEntertainments sx={{ height: "auto" }} special={true} entertainments={entertainments} />}
 		</Container>
 	);
 }

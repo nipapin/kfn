@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 const ALLOWED_MIME = new Set(["image/png", "image/jpeg", "image/webp", "image/gif", "image/svg+xml", "video/mp4", "video/webm"]);
-const ALLOWED_FOLDERS = new Set(["partners", "video"]);
+const ALLOWED_FOLDERS = new Set(["partners", "video", "entertainments", "tours"]);
 const MAX_SIZE = 25 * 1024 * 1024; // 25 MB
 
 function slugify(name: string) {
