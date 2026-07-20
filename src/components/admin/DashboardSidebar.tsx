@@ -4,11 +4,13 @@ import { List, ListItemText, ListItem, Paper, ListItemButton, ListItemIcon } fro
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import EventIcon from "@mui/icons-material/Event";
 import HandshakeIcon from "@mui/icons-material/Handshake";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 
 const items = [
 	{ href: "/dashboard/applications", label: "Заявки", icon: <AssignmentIcon />, disabled: false },
+	{ href: "/dashboard/packages", label: "Тарифы", icon: <LocalOfferIcon />, disabled: false },
 	{ href: "/dashboard/events", label: "Мероприятия", icon: <EventIcon />, disabled: true },
 	{ href: "/dashboard/partners", label: "Партнёры", icon: <HandshakeIcon />, disabled: false }
 ];

@@ -103,3 +103,18 @@ export interface Partner {
 	sortOrder?: number;
 	isActive?: boolean;
 }
+
+export interface PackageBenefit {
+	available: boolean;
+	label: string;
+}
+
+export interface ParticipationPackage {
+	id?: number;
+	title: string;
+	price: number;
+	vip: boolean;
+	benefits: PackageBenefit[];
+	sortOrder?: number;
+	isActive?: boolean;
+}

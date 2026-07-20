@@ -1,8 +1,9 @@
 "use server";
 
 import { query } from "./actions/database";
-import { Partner } from "./app/types/interfaces";
+import { PackageBenefit, Partner, ParticipationPackage } from "./app/types/interfaces";
 import { entertainments } from "./db/database";
+import { FALLBACK_PACKAGES } from "./lib/packagesFallback";
 
 export const getArticle = async (articleid: string) => {
 	return entertainments.find((article) => article.id === articleid);
@@ -25,6 +26,26 @@ interface PartnerRow {
 	sort_order: number;
 	is_active: boolean;
 }
+
+interface PackageRow {
+	id: number;
+	title: string;
+	price: number;
+	vip: boolean;
+	benefits: PackageBenefit[] | string;
+	sort_order: number;
+	is_active: boolean;
+}
+
+const parseBenefits = (raw: PackageBenefit[] | string): PackageBenefit[] => {
+	if (Array.isArray(raw)) return raw;
+	try {
+		const parsed = JSON.parse(raw);
+		return Array.isArray(parsed) ? parsed : [];
+	} catch {
+		return [];
+	}
+};
 
 export const getPartners = async (): Promise<Partner[]> => {
 	try {
@@ -56,5 +77,23 @@ export const getPartners = async (): Promise<Partner[]> => {
 	} catch (error) {
 		console.error("getPartners failed:", error);
 		return [];
+	}
+};
+
+export const getPackages = async (): Promise<ParticipationPackage[]> => {
+	try {
+		const rows = (await query("SELECT * FROM packages WHERE is_active = TRUE ORDER BY sort_order ASC, id ASC", [])) as PackageRow[];
+		return rows.map((row) => ({
+			id: row.id,
+			title: row.title,
+			price: Number(row.price),
+			vip: Boolean(row.vip),
+			benefits: parseBenefits(row.benefits),
+			sortOrder: row.sort_order,
+			isActive: row.is_active
+		}));
+	} catch (error) {
+		console.error("getPackages failed:", error);
+		return FALLBACK_PACKAGES;
 	}
 };
