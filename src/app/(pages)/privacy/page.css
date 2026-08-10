@@ -1,0 +1,40 @@
+.privacy * {
+    font-weight: 300;
+    font-size: 1rem;
+}
+
+.privacy h1 {
+    font-size: 2rem;
+}
+
+.privacy h2 {
+    font-size: 1.5rem;
+}
+
+.privacy h3 {
+    margin-left: 1rem;
+}
+
+.privacy ul {
+    margin-left: 2rem;
+}
+
+.privacy table {
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+
+.privacy td {
+    padding: 1rem;
+    border: 1px solid black;
+}
+
+.privacy table ul {
+    padding: 0
+}
+
+.privacy a {
+    text-decoration: underline;
+    color: #780522;
+    font-weight: 500;
+}
