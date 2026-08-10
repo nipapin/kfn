@@ -1,6 +1,7 @@
 "use client";
 
 import "@/styles/registration.css";
+import { ParticipationPackage } from "@/app/types/interfaces";
 import { CheckCircle, Close, Group } from "@mui/icons-material";
 import {
 	Box,
@@ -21,10 +22,8 @@ import {
 	Typography
 } from "@mui/material";
 import NextLink from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IMask, IMaskMixin } from "react-imask";
-
-const tariffs = [{ name: "Базовый" }, { name: "Премьер" }, { name: "VIP" }];
 
 const phoneMaskOptions = {
 	mask: "+7 000 000 00 00",
@@ -41,13 +40,25 @@ export default function RegistrationForm({ modal, close }: { modal?: boolean; cl
 	const phoneRef = useRef<HTMLInputElement>(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
+	const [tariffs, setTariffs] = useState<ParticipationPackage[]>([]);
+
+	useEffect(() => {
+		fetch("/api/packages")
+			.then((res) => (res.ok ? res.json() : []))
+			.then((data: ParticipationPackage[]) => setTariffs(Array.isArray(data) ? data : []))
+			.catch(() => setTariffs([]));
+	}, []);
+
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const formData = new FormData(e.target as HTMLFormElement);
 		const payload = Object.fromEntries(formData);
+		const selected = tariffs[Number(payload.tariff)];
+		if (!selected) return;
+		setIsLoading(true);
 		await fetch("/api/registration", {
 			method: "POST",
-			body: JSON.stringify({ ...payload, tariff: tariffs[Number(payload.tariff)].name })
+			body: JSON.stringify({ ...payload, tariff: selected.title })
 		}).finally(() => {
 			setIsLoading(false);
 			setSuccess(true);
@@ -81,10 +92,14 @@ export default function RegistrationForm({ modal, close }: { modal?: boolean; cl
 						slotProps={{ input: { sx: { backgroundColor: "white", borderRadius: "0.5rem" } } }}
 						defaultValue={0}
 						name='tariff'
+						disabled={tariffs.length === 0}
 					>
 						{tariffs.map((tariff, index) => (
-							<MenuItem key={tariff.name} value={index}>
-								{tariff.name}
+							<MenuItem key={tariff.id ?? tariff.title} value={index}>
+								{tariff.title}
+								{tariff.price > 0
+									? ` — ${tariff.price.toLocaleString("ru", { style: "currency", currency: "RUB", maximumFractionDigits: 0 })}`
+									: ""}
 							</MenuItem>
 						))}
 					</Select>

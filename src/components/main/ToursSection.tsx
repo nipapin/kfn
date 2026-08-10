@@ -1,13 +1,15 @@
 "use client";
 
-import { tours } from "@/db/database";
+import { TourItem } from "@/app/types/interfaces";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Title from "../shared/Title";
 import TourCard from "../Tours/TourCard";
 
-export default function ToursSection() {
+export default function ToursSection({ tours }: { tours: TourItem[] }) {
 	const { breakpoints } = useTheme();
 	const isMobile = useMediaQuery(breakpoints.down("md"));
+
+	if (!tours.length) return null;
 
 	return (
 		<Box

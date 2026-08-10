@@ -1,5 +1,5 @@
+import { getTour } from "@/actions";
 import TourContent from "@/components/Tours/TourContent";
-import { tours } from "@/db/database";
 import { Container, Typography } from "@mui/material";
 import { notFound } from "next/navigation";
 
@@ -11,7 +11,7 @@ interface TourPageProps {
 
 export default async function TourPage({ params }: TourPageProps) {
 	const { tourid } = await params;
-	const tour = tours.find((tour) => tour.id === tourid);
+	const tour = await getTour(tourid);
 	if (!tour) {
 		return notFound();
 	}

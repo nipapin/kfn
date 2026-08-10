@@ -1,5 +1,4 @@
 import { TourItem } from "@/app/types/interfaces";
-import { translate } from "@/utilities/translator";
 import { ArrowForward } from "@mui/icons-material";
 import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@mui/material";
 import NextLink from "next/link";
@@ -21,7 +20,7 @@ export default function TourCard({ tour }: { tour: TourItem }) {
 				<Typography>{tour.description}</Typography>
 			</CardContent>
 			<CardActions sx={{ "& a": { ml: "auto" } }}>
-				<NextLink href={`/tours/${translate(tour.name + " " + tour.type)}`} passHref>
+				<NextLink href={`/tours/${tour.id}`} passHref>
 					<Button variant='text' color='primary' endIcon={<ArrowForward />}>
 						Подробнее
 					</Button>

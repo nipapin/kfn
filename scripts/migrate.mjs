@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import pg from "pg";
 import dotenv from "dotenv";
 
+dotenv.config({ path: ".env.local" });
 dotenv.config();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -19,6 +20,11 @@ const pool = new pg.Pool({
 });
 
 async function migrate() {
+	if (!process.env.DATABASE_HOST || !process.env.DATABASE_NAME) {
+		console.error("Missing DATABASE_* env vars. Create .env or .env.local first.");
+		process.exit(1);
+	}
+
 	const client = await pool.connect();
 	try {
 		await client.query(`
