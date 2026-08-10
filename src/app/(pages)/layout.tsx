@@ -37,7 +37,7 @@ export default async function RootLayout({ children }: Readonly<RootLayoutProps>
             <Footer />
           </ThemeWrapper>
         </AppRouterCacheProvider>
-        <script src="https://chataudit.ru/static/js/landing-check.js" data-partner="ery1iar" data-position="left" defer></script>
+        {/* <script src="https://chataudit.ru/static/js/landing-check.js" data-partner="ery1iar" data-position="left" defer></script> */}
       </body>
     </html>
   );
