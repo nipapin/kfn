@@ -1,0 +1,14 @@
+import { cpSync, existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { basename, join, resolve } from "node:path";
+import { execFileSync } from "node:child_process";
+const sha = process.env.GITHUB_SHA;
+if (!/^[a-f0-9]{40}$/.test(sha ?? "")) throw new Error("Invalid commit");
+if (!existsSync(".next/standalone/server.js")) throw new Error("Standalone build missing");
+const release = resolve("output/release");
+mkdirSync(release, { recursive: true });
+const copy = (source, target) => cpSync(source, target, { recursive: true, filter: path => !basename(path).startsWith(".env") });
+copy(".next/standalone", release);
+copy(".next/static", join(release, ".next/static"));
+copy("public", join(release, "public"));
+writeFileSync(join(release, "REVISION"), sha + "\n");
+execFileSync("tar", ["-czf", resolve("output/kfn.tgz"), "-C", release, "."]);

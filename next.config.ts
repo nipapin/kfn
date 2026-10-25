@@ -11,6 +11,7 @@ if (process.env.S3_URL) {
 }
 
 const nextConfig: NextConfig = {
+	output: "standalone",
 	images: {
 		remotePatterns: remotePatterns.map((p) => new URL(p))
 	},
