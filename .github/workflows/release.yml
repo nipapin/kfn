@@ -46,12 +46,6 @@ jobs:
       - run: npm run migrate
       - run: npm run build
       - run: node scripts/package-release.mjs
-      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
-        with:
-          name: kfn-${{ github.sha }}
-          path: output/kfn.tgz
-          retention-days: 2
-          if-no-files-found: error
       - name: Deploy standalone release to FirstVDS
         if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request' && vars.FIRSTVDS_DEPLOY_ENABLED == 'true'
         env:
